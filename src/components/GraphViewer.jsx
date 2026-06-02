@@ -43,7 +43,7 @@ export default function GraphViewer() {
   const nodeThreeObject = useCallback((node) => {
     const palette = GROUP_PALETTE[node.group] ?? GROUP_PALETTE[1]
     const radius = Math.cbrt(node.val) * 2
-    const geometry = new THREE.SphereGeometry(radius, 16, 16)
+    const geometry = new THREE.SphereGeometry(radius, 8, 8)
     const material = new THREE.MeshBasicMaterial({
       color: palette.color,
       wireframe: true,
