@@ -17,7 +17,8 @@ const NODE_ID_MAP = Object.fromEntries(graphData.nodes.map((n) => [n.id, n]))
 export default function GraphViewer() {
   const graphRef = useRef()
   const nodeMeshes = useRef(new Map())
-  // Refs for highlight sets — stable callbacks read from these without causing re-renders
+  const haloRings = useRef([])
+  const rafRef = useRef(null)
   const highlightLinksRef = useRef(new Set())
   const highlightNodesRef = useRef(new Set())
   const [selectedNode, setSelectedNode] = useState(null)
@@ -40,6 +41,18 @@ export default function GraphViewer() {
     return () => window.removeEventListener('resize', onResize)
   }, [])
 
+  // Halo animation loop
+  useEffect(() => {
+    const animate = () => {
+      haloRings.current.forEach((ring, i) => {
+        ring.rotation.z += i % 2 === 0 ? 0.005 : -0.003
+      })
+      rafRef.current = requestAnimationFrame(animate)
+    }
+    rafRef.current = requestAnimationFrame(animate)
+    return () => cancelAnimationFrame(rafRef.current)
+  }, [])
+
   const nodeThreeObject = useCallback((node) => {
     const palette = GROUP_PALETTE[node.group] ?? GROUP_PALETTE[1]
     const radius = Math.cbrt(node.val) * 2
@@ -50,6 +63,37 @@ export default function GraphViewer() {
     })
     const mesh = new THREE.Mesh(geometry, material)
     nodeMeshes.current.set(node.id, mesh)
+
+    if (node.id === 'root') {
+      // Outer ring
+      const ring1 = new THREE.Mesh(
+        new THREE.RingGeometry(radius * 1.7, radius * 2.0, 48),
+        new THREE.MeshBasicMaterial({
+          color: '#60a5fa',
+          side: THREE.DoubleSide,
+          transparent: true,
+          opacity: 0.35,
+        })
+      )
+      ring1.rotation.x = Math.PI * 0.35
+
+      // Inner ring — different tilt, counter-rotates
+      const ring2 = new THREE.Mesh(
+        new THREE.RingGeometry(radius * 1.3, radius * 1.55, 48),
+        new THREE.MeshBasicMaterial({
+          color: '#93c5fd',
+          side: THREE.DoubleSide,
+          transparent: true,
+          opacity: 0.25,
+        })
+      )
+      ring2.rotation.x = Math.PI * 0.6
+
+      mesh.add(ring1)
+      mesh.add(ring2)
+      haloRings.current = [ring1, ring2]
+    }
+
     return mesh
   }, [])
 
@@ -73,7 +117,6 @@ export default function GraphViewer() {
     highlightNodesRef.current = nodes
     highlightLinksRef.current = links
 
-    // Mutate MeshBasicMaterial.color directly — no emissive on this material type
     nodeMeshes.current.forEach((mesh, id) => {
       const palette = GROUP_PALETTE[NODE_ID_MAP[id]?.group] ?? GROUP_PALETTE[1]
       if (!node) {
@@ -88,7 +131,6 @@ export default function GraphViewer() {
     })
   }, [])
 
-  // Stable callbacks — read from refs, never change reference → ForceGraph never re-inits nodes
   const linkColor = useCallback(
     (link) => (highlightLinksRef.current.has(link) ? '#93c5fd' : 'rgba(99,130,235,0.45)'),
     []
