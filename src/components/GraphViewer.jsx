@@ -6,6 +6,8 @@ import graphData from '../data.json'
 import NodePanel from './NodePanel'
 import { createCosmicEye } from './CosmicEye'
 import { createBlackHole } from './BlackHole'
+import { createBlackHoleTON618 } from './BlackHoleTON618'
+import { createQuantumVortex } from './QuantumVortex'
 
 const GROUP_PALETTE = {
   1: { color: '#60a5fa' },
@@ -120,6 +122,38 @@ export default function GraphViewer() {
       timeOffset: 12.5,
     })
 
+    const ton618_a = createBlackHoleTON618(scene, {
+      position: new THREE.Vector3(420, -80, -260),
+      diskSpread: 110, count: 7000,
+      tilt: 0.4, timeOffset: 0,
+    })
+    const ton618_b = createBlackHoleTON618(scene, {
+      position: new THREE.Vector3(-500, 110, -200),
+      diskSpread: 100, count: 7000,
+      tilt: 0.7, timeOffset: 5,
+    })
+    const ton618_c = createBlackHoleTON618(scene, {
+      position: new THREE.Vector3(160, -170, 470),
+      diskSpread: 110, count: 7000,
+      tilt: 0.3, timeOffset: 9,
+    })
+    const ton618_d = createBlackHoleTON618(scene, {
+      position: new THREE.Vector3(-320, 130, 430),
+      diskSpread: 95, count: 7000,
+      tilt: 1.0, timeOffset: 14,
+    })
+
+    const vortex = createQuantumVortex(scene, {
+      position: new THREE.Vector3(-220, 140, -380),
+      count: 1800,
+      radius: 75,
+      flow: 0.12,
+      vortex: 0.6,
+      pulse: 0.4,
+      brightness: 0.22,
+      timeOffset: 4,
+    })
+
     // Twinkling groups — 3 layers with offset phases
     const twinklers = Array.from({ length: 3 }, (_, i) => {
       const count = 180
@@ -188,6 +222,11 @@ export default function GraphViewer() {
       eye.update(now / 1000)
       bh1.update(now / 1000)
       bh2.update(now / 1000)
+      ton618_a.update(now / 1000)
+      ton618_b.update(now / 1000)
+      ton618_c.update(now / 1000)
+      ton618_d.update(now / 1000)
+      vortex.update(now / 1000)
 
       // Halo rings
       haloRings.current.forEach((ring, i) => {
@@ -266,6 +305,11 @@ export default function GraphViewer() {
       eye.dispose()
       bh1.dispose()
       bh2.dispose()
+      ton618_a.dispose()
+      ton618_b.dispose()
+      ton618_c.dispose()
+      ton618_d.dispose()
+      vortex.dispose()
       twinklers.forEach(({ pts, geo, mat }) => { scene.remove(pts); geo.dispose(); mat.dispose() })
       shooters.forEach(({ strands }) => strands.forEach(({ line, geo, mat }) => { scene.remove(line); geo.dispose(); mat.dispose() }))
     }
