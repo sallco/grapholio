@@ -194,7 +194,7 @@ export default function GraphViewer() {
           setPanelPos({ x, y })
         }}
       />
-      <NodePanel node={selectedNode} pos={panelPos} onClose={() => setSelectedNode(null)} />
+      <NodePanel key={selectedNode?.id} node={selectedNode} pos={panelPos} onClose={() => setSelectedNode(null)} />
     </div>
   )
 }

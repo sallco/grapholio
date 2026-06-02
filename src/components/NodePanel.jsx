@@ -61,8 +61,15 @@ export default function NodePanel({ node, pos, onClose }) {
 
   return (
     <div
-      className="holo-panel absolute z-50 transition-all duration-300"
-      style={{ color, left: pos.x, top: pos.y, width: '400px' }}
+      className="holo-panel absolute z-50"
+      style={{
+        color,
+        left: pos.x,
+        top: pos.y,
+        width: '400px',
+        transformOrigin: 'bottom center',
+        animation: 'holo-deploy 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+      }}
     >
       {/* Gradient border wrapper */}
       <div
