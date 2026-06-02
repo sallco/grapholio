@@ -183,7 +183,7 @@ export default function GraphViewer() {
           vec.project(camera)
           const sw = dimensions.width
           const sh = dimensions.height
-          const panelW = 336  // w-80 + padding
+          const panelW = 416  // card width + margin
           const panelH = 480  // approximate max height
           const margin = 24
           let x = (vec.x + 1) / 2 * sw + margin
