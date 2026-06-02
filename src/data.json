@@ -68,6 +68,35 @@
     },
 
     {
+      "id": "concept_fullstack",
+      "name": "Full Stack",
+      "group": 6,
+      "val": 13,
+      "desc": "Desarrollo end-to-end: diseño de APIs, lógica de negocio en servidor y UI reactiva en cliente."
+    },
+    {
+      "id": "concept_devops",
+      "name": "DevOps & CI/CD",
+      "group": 6,
+      "val": 11,
+      "desc": "Containerización con Docker, pipelines de integración continua y despliegue automático en la nube."
+    },
+    {
+      "id": "concept_security",
+      "name": "Seguridad Web",
+      "group": 6,
+      "val": 11,
+      "desc": "Autenticación JWT, control de acceso basado en roles (RBAC) y permisos granulares a nivel de base de datos."
+    },
+    {
+      "id": "concept_db_adv",
+      "name": "BD Relacionales",
+      "group": 6,
+      "val": 11,
+      "desc": "Diseño normalizado 3FN, Stored Procedures, vistas SQL, transacciones y RBAC a nivel DBMS."
+    },
+
+    {
       "id": "proj_music",
       "name": "E-Commerce Musical",
       "group": 5,
@@ -88,6 +117,31 @@
       "github": null,
       "demo": null,
       "image": null
+    },
+    {
+      "id": "proj_proyecto2_db",
+      "name": "Tienda de Discos",
+      "group": 5,
+      "val": 16,
+      "desc": "Tienda de vinilos, CDs y cassettes con panel admin multirol. Venta online y venta presencial desde el panel de staff, con KPIs en tiempo real y exportación CSV.",
+      "highlights": [
+        "RBAC dual: middleware JWT + 5 usuarios MariaDB con GRANTs por columna — el acceso no-autorizado falla incluso a nivel de driver",
+        "sp_registrar_venta: verifica stock de todos los ítems antes de insertar una sola fila, ROLLBACK garantizado con EXIT HANDLER",
+        "Precio histórico inmutable en DetalleVenta — cambios futuros de precio nunca alteran ventas pasadas",
+        "Dual ORM: mysql2 para Stored Procedures con control total de SQL + Prisma para CRUD tipado en el mismo backend",
+        "Deploy continuo a Azure VM con GitHub Actions — cada push a main actualiza producción automáticamente"
+      ],
+      "learnings": [
+        "Diseño de esquemas relacionales 3FN: 12 tablas, normalización con decisiones documentadas",
+        "RBAC a nivel DBMS: creación de roles MariaDB, GRANTs granulares por tabla y por columna",
+        "Stored Procedures con JSON_TABLE, parámetros IN/OUT, transacciones y manejo de errores con SIGNAL",
+        "Vistas SQL complejas como contrato de datos entre capas de la aplicación",
+        "Containerización multi-stage con Docker y docker-compose (frontend Nginx, backend Node, MariaDB, Adminer)"
+      ],
+      "tech": ["Vue 3", "Fastify", "MariaDB", "Prisma", "Docker", "JWT", "Chart.js", "GitHub Actions"],
+      "github": "https://github.com/Diego-glitch-cloud/Proyecto2-DB",
+      "demo": null,
+      "image": "/projects/proyecto2-db.png"
     }
   ],
   "links": [
@@ -103,6 +157,12 @@
     { "source": "branch_tech", "target": "tech_db" },
 
     { "source": "branch_projects", "target": "proj_music" },
-    { "source": "branch_projects", "target": "proj_narrative" }
+    { "source": "branch_projects", "target": "proj_narrative" },
+    { "source": "branch_projects", "target": "proj_proyecto2_db" },
+
+    { "source": "proj_proyecto2_db", "target": "concept_fullstack" },
+    { "source": "proj_proyecto2_db", "target": "concept_devops" },
+    { "source": "proj_proyecto2_db", "target": "concept_security" },
+    { "source": "proj_proyecto2_db", "target": "concept_db_adv" }
   ]
 }

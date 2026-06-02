@@ -14,6 +14,7 @@ const GROUP_PALETTE = {
   3: { color: '#34d399' },
   4: { color: '#fb923c' },
   5: { color: '#f472b6' },
+  6: { color: '#a78bfa' },
 }
 
 const NODE_ID_MAP = Object.fromEntries(graphData.nodes.map((n) => [n.id, n]))
