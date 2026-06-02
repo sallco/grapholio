@@ -44,11 +44,9 @@ export default function GraphViewer() {
     const palette = GROUP_PALETTE[node.group] ?? GROUP_PALETTE[1]
     const radius = Math.cbrt(node.val) * 2
     const geometry = new THREE.SphereGeometry(radius, 16, 16)
-    const material = new THREE.MeshPhongMaterial({
+    const material = new THREE.MeshBasicMaterial({
       color: palette.color,
-      emissive: palette.emissive,
-      shininess: 90,
-      specular: '#ffffff',
+      wireframe: true,
     })
     const mesh = new THREE.Mesh(geometry, material)
     nodeMeshes.current.set(node.id, mesh)
