@@ -33,6 +33,15 @@ export default function GraphViewer() {
     if (graphRef.current) {
       graphRef.current.d3Force('charge').strength(-120)
       graphRef.current.d3Force('link').distance(60)
+
+      graphRef.current.cameraPosition({ z: 220 })
+
+      const controls = graphRef.current.controls()
+      controls.enableDamping = true
+      controls.dampingFactor = 0.08
+      controls.rotateSpeed = 0.6
+      controls.zoomSpeed = 0.8
+      controls.panSpeed = 0.8
     }
   }, [])
 
@@ -174,6 +183,7 @@ export default function GraphViewer() {
         linkDirectionalParticleColor={(link) =>
           highlightLinksRef.current.has(link) ? '#93c5fd' : '#1e3a8a'
         }
+        controlType="orbit"
         showNavInfo={false}
         onNodeHover={updateHighlight}
         onNodeClick={(node) => {
