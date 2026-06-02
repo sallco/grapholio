@@ -151,17 +151,18 @@ export default function GraphViewer() {
     })
 
     const ns1 = createNeutronStar(scene, {
-      position: new THREE.Vector3(350, 190, -320),
+      position: new THREE.Vector3(400, -80, 150),
+      scale: 60, count: 5000,
       timeOffset: 0,
     })
     const ns2 = createNeutronStar(scene, {
-      position: new THREE.Vector3(-430, -170, 240),
-      scale: 40,
+      position: new THREE.Vector3(-500, 60, -100),
+      scale: 55, count: 5000,
       timeOffset: 8,
     })
     const ns3 = createNeutronStar(scene, {
-      position: new THREE.Vector3(60, 290, -490),
-      scale: 38,
+      position: new THREE.Vector3(-90, 100, -600),
+      scale: 52, count: 5000,
       timeOffset: 16,
     })
 

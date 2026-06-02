@@ -37,7 +37,7 @@ export function createNeutronStar(scene, {
   chaos      = 0.55,
   timeOffset = 0,
 } = {}) {
-  const geometry = new THREE.PlaneGeometry(1.3, 1.3)
+  const geometry = new THREE.PlaneGeometry(1.8, 1.8)
   const material = new THREE.ShaderMaterial({
     uniforms: { uTime: { value: 0 } },
     vertexShader: VERT,
