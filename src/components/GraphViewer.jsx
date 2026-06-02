@@ -113,6 +113,12 @@ export default function GraphViewer() {
         nodeThreeObjectExtend={false}
         linkColor={linkColor}
         linkWidth={linkWidth}
+        linkDirectionalParticles={2}
+        linkDirectionalParticleSpeed={0.004}
+        linkDirectionalParticleWidth={1.5}
+        linkDirectionalParticleColor={(link) =>
+          highlightLinksRef.current.has(link) ? '#93c5fd' : '#1e3a8a'
+        }
         showNavInfo={false}
         onNodeHover={updateHighlight}
         onNodeClick={(node) => setSelectedNode(node)}
