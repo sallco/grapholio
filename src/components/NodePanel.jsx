@@ -141,12 +141,12 @@ export default function NodePanel({ node, pos, onClose }) {
             >
               <div className="flex-1 pr-6">
                 <p
-                  className="text-xs font-medium tracking-[0.22em] uppercase mb-2"
+                  className="text-sm font-medium tracking-[0.22em] uppercase mb-2"
                   style={{ color, opacity: 0.6 }}
                 >
                   {isProject ? 'Proyecto' : node.group === 4 ? 'Tecnología' : node.group === 3 ? 'Perfil' : 'Información'}
                 </p>
-                <h2 className="text-xl font-semibold leading-tight text-slate-100">
+                <h2 className="text-2xl font-semibold leading-tight text-slate-100">
                   {node.name}
                 </h2>
               </div>
@@ -183,14 +183,14 @@ export default function NodePanel({ node, pos, onClose }) {
             )}
 
             {/* Descripción */}
-            <p className="text-sm text-slate-400 mb-7 leading-snug">
+            <p className="text-base text-slate-400 mb-7 leading-snug">
               {node.desc ?? 'Sin descripción disponible.'}
             </p>
 
             {/* Tech stack */}
             {isProject && node.tech?.length > 0 && (
               <div className="mb-6">
-                <p className="text-xs tracking-[0.18em] uppercase text-slate-500 mb-3">
+                <p className="text-sm tracking-[0.18em] uppercase text-slate-500 mb-3">
                   Stack
                 </p>
                 <div className="flex flex-wrap gap-2">

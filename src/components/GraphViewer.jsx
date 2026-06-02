@@ -34,7 +34,7 @@ export default function GraphViewer() {
       graphRef.current.d3Force('charge').strength(-120)
       graphRef.current.d3Force('link').distance(60)
 
-      graphRef.current.cameraPosition({ z: 220 })
+      graphRef.current.cameraPosition({ z: 270 })
 
       const controls = graphRef.current.controls()
       controls.enableDamping = true
@@ -51,6 +51,25 @@ export default function GraphViewer() {
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
   }, [])
+
+  // Truco raycast para drag solo con clic izq — desactivado por preferencia de navegación
+  // useEffect(() => {
+  //   const noop = () => {}
+  //   const disableRaycast = (e) => {
+  //     if (e.button !== 2) return
+  //     nodeMeshes.current.forEach((mesh) => { mesh.raycast = noop })
+  //   }
+  //   const restoreRaycast = (e) => {
+  //     if (e.button !== 2) return
+  //     nodeMeshes.current.forEach((mesh) => { mesh.raycast = THREE.Mesh.prototype.raycast })
+  //   }
+  //   window.addEventListener('mousedown', disableRaycast)
+  //   window.addEventListener('mouseup', restoreRaycast)
+  //   return () => {
+  //     window.removeEventListener('mousedown', disableRaycast)
+  //     window.removeEventListener('mouseup', restoreRaycast)
+  //   }
+  // }, [])
 
   // Halo animation loop
   useEffect(() => {
@@ -184,6 +203,7 @@ export default function GraphViewer() {
           highlightLinksRef.current.has(link) ? '#93c5fd' : '#1e3a8a'
         }
         controlType="orbit"
+        enableNodeDrag={false}
         showNavInfo={false}
         onNodeHover={updateHighlight}
         onNodeClick={(node) => {
