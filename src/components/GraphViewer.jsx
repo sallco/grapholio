@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState, useCallback } from 'react'
 import ForceGraph3D from 'react-force-graph-3d'
 import * as THREE from 'three'
+import SpriteText from 'three-spritetext'
 import graphData from '../data.json'
 import NodePanel from './NodePanel'
 
@@ -63,6 +64,17 @@ export default function GraphViewer() {
     })
     const mesh = new THREE.Mesh(geometry, material)
     nodeMeshes.current.set(node.id, mesh)
+
+    // Floating label above sphere
+    const label = new SpriteText(node.name)
+    label.color = GROUP_PALETTE[node.group]?.color ?? '#ffffff'
+    label.textHeight = node.group === 1 ? 3.5 : node.group === 2 ? 2.8 : 2.2
+    label.position.y = radius + 4
+    label.fontFace = 'Inter, system-ui, sans-serif'
+    label.backgroundColor = 'rgba(10,15,36,0.55)'
+    label.padding = 1.5
+    label.borderRadius = 3
+    mesh.add(label)
 
     if (node.id === 'root') {
       // Outer ring
@@ -149,7 +161,7 @@ export default function GraphViewer() {
         width={dimensions.width}
         height={dimensions.height}
         backgroundColor="#0a0f24"
-        nodeLabel="name"
+        nodeLabel=""
         nodeVal={(node) => node.val}
         nodeThreeObject={nodeThreeObject}
         nodeThreeObjectExtend={false}
