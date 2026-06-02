@@ -139,6 +139,16 @@ export default function GraphViewer() {
       diskSpread: 95, count: 7000,
       tilt: 1.0, timeOffset: 14,
     })
+    const ton618_e = createBlackHoleTON618(scene, {
+      position: new THREE.Vector3(80, 200, -480),
+      diskSpread: 105, count: 7000,
+      tilt: 0.5, timeOffset: 20,
+    })
+    const ton618_f = createBlackHoleTON618(scene, {
+      position: new THREE.Vector3(-200, -200, -420),
+      diskSpread: 90, count: 7000,
+      tilt: 0.9, timeOffset: 3,
+    })
 
     const ns1 = createNeutronStar(scene, {
       position: new THREE.Vector3(350, 190, -320),
@@ -226,6 +236,8 @@ export default function GraphViewer() {
       ton618_b.update(now / 1000)
       ton618_c.update(now / 1000)
       ton618_d.update(now / 1000)
+      ton618_e.update(now / 1000)
+      ton618_f.update(now / 1000)
       ns1.update(now / 1000)
       ns2.update(now / 1000)
       ns3.update(now / 1000)
@@ -310,6 +322,8 @@ export default function GraphViewer() {
       ton618_b.dispose()
       ton618_c.dispose()
       ton618_d.dispose()
+      ton618_e.dispose()
+      ton618_f.dispose()
       ns1.dispose()
       ns2.dispose()
       ns3.dispose()
