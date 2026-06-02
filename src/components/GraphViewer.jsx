@@ -22,6 +22,7 @@ export default function GraphViewer() {
   const rafRef = useRef(null)
   const highlightLinksRef = useRef(new Set())
   const highlightNodesRef = useRef(new Set())
+  const selectedNodeIdRef = useRef(null)
   const [selectedNode, setSelectedNode] = useState(null)
   const [panelPos, setPanelPos] = useState({ x: 0, y: 0 })
   const [dimensions, setDimensions] = useState({
@@ -167,6 +168,22 @@ export default function GraphViewer() {
         ring.rotation.z += i % 2 === 0 ? 0.005 : -0.003
       })
 
+      // Selected node — color oscillation + self-rotation
+      const selId = selectedNodeIdRef.current
+      nodeMeshes.current.forEach((mesh, id) => {
+        if (id === selId) {
+          mesh.rotation.y += 0.018
+          mesh.rotation.x += 0.006
+          const palette = GROUP_PALETTE[NODE_ID_MAP[id]?.group] ?? GROUP_PALETTE[1]
+          const t = 0.5 + 0.5 * Math.sin(now * 0.003)
+          const c = new THREE.Color(palette.color)
+          c.lerp(new THREE.Color('#ffffff'), t * 0.65)
+          mesh.material.color.copy(c)
+        } else if (mesh.rotation.y !== 0) {
+          mesh.rotation.set(0, 0, 0)
+        }
+      })
+
       // Twinkling
       twinklers.forEach(({ mat, phase, speed }) => {
         mat.opacity = 0.2 + 0.5 * (0.5 + 0.5 * Math.sin(now * 0.001 * speed + phase))
@@ -302,6 +319,8 @@ export default function GraphViewer() {
 
     nodeMeshes.current.forEach((mesh, id) => {
       const palette = GROUP_PALETTE[NODE_ID_MAP[id]?.group] ?? GROUP_PALETTE[1]
+      const isSelected = id === selectedNodeIdRef.current
+      if (isSelected) return  // RAF loop handles selected node color
       if (!node) {
         mesh.material.color.set(palette.color)
       } else if (id === node.id) {
@@ -349,6 +368,7 @@ export default function GraphViewer() {
         showNavInfo={false}
         onNodeHover={updateHighlight}
         onNodeClick={(node) => {
+          selectedNodeIdRef.current = node.id
           setSelectedNode(node)
           const camera = graphRef.current.camera()
           const vec = new THREE.Vector3(node.x ?? 0, node.y ?? 0, node.z ?? 0)
@@ -366,7 +386,16 @@ export default function GraphViewer() {
           setPanelPos({ x, y })
         }}
       />
-      <NodePanel key={selectedNode?.id} node={selectedNode} pos={panelPos} onClose={() => setSelectedNode(null)} />
+      <NodePanel key={selectedNode?.id} node={selectedNode} pos={panelPos} onClose={() => {
+        selectedNodeIdRef.current = null
+        const mesh = nodeMeshes.current.get(selectedNode?.id)
+        if (mesh) {
+          mesh.rotation.set(0, 0, 0)
+          const palette = GROUP_PALETTE[NODE_ID_MAP[selectedNode?.id]?.group] ?? GROUP_PALETTE[1]
+          mesh.material.color.set(palette.color)
+        }
+        setSelectedNode(null)
+      }} />
     </div>
   )
 }
