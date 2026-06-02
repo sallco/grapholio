@@ -67,8 +67,7 @@ export default function NodePanel({ node, pos, onClose }) {
         left: pos.x,
         top: pos.y,
         width: '400px',
-        transformOrigin: 'bottom center',
-        animation: 'holo-deploy 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        animation: 'holo-deploy 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards',
       }}
     >
       {/* Gradient border wrapper */}
@@ -87,10 +86,14 @@ export default function NodePanel({ node, pos, onClose }) {
           className="relative rounded-md overflow-hidden"
           style={{ background: 'rgba(5,12,31,0.93)', backdropFilter: 'blur(14px)' }}
         >
-          {/* Scan line animation */}
+          {/* Deploy scanline — sube sincronizada con clip-path reveal */}
           <div
-            className="holo-scan absolute inset-0 pointer-events-none z-10"
-            style={{ color }}
+            className="absolute inset-x-0 h-px pointer-events-none z-20"
+            style={{
+              background: `linear-gradient(90deg, transparent, ${color}dd, ${color}, ${color}dd, transparent)`,
+              boxShadow: `0 0 10px 3px ${color}55`,
+              animation: 'holo-scanline-sweep 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+            }}
           />
 
           <div className="px-10 py-9">
