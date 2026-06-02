@@ -23,6 +23,7 @@ export default function GraphViewer() {
   const highlightLinksRef = useRef(new Set())
   const highlightNodesRef = useRef(new Set())
   const [selectedNode, setSelectedNode] = useState(null)
+  const [panelPos, setPanelPos] = useState({ x: 0, y: 0 })
   const [dimensions, setDimensions] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -175,9 +176,25 @@ export default function GraphViewer() {
         }
         showNavInfo={false}
         onNodeHover={updateHighlight}
-        onNodeClick={(node) => setSelectedNode(node)}
+        onNodeClick={(node) => {
+          setSelectedNode(node)
+          const camera = graphRef.current.camera()
+          const vec = new THREE.Vector3(node.x ?? 0, node.y ?? 0, node.z ?? 0)
+          vec.project(camera)
+          const sw = dimensions.width
+          const sh = dimensions.height
+          const panelW = 336  // w-80 + padding
+          const panelH = 480  // approximate max height
+          const margin = 24
+          let x = (vec.x + 1) / 2 * sw + margin
+          let y = -(vec.y - 1) / 2 * sh - panelH / 2
+          // Clamp to viewport
+          x = Math.min(Math.max(x, margin), sw - panelW - margin)
+          y = Math.min(Math.max(y, margin), sh - panelH - margin)
+          setPanelPos({ x, y })
+        }}
       />
-      <NodePanel node={selectedNode} onClose={() => setSelectedNode(null)} />
+      <NodePanel node={selectedNode} pos={panelPos} onClose={() => setSelectedNode(null)} />
     </div>
   )
 }

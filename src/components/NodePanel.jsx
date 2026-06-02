@@ -63,7 +63,7 @@ function LinkButton({ href, label, icon }) {
   )
 }
 
-export default function NodePanel({ node, onClose }) {
+export default function NodePanel({ node, pos, onClose }) {
   if (!node) return null
 
   const color = GROUP_COLORS[node.group] ?? '#60a5fa'
@@ -72,8 +72,8 @@ export default function NodePanel({ node, onClose }) {
 
   return (
     <div
-      className="holo-panel holo-scan absolute top-6 right-6 w-80 max-w-[calc(100vw-3rem)] z-50 overflow-hidden"
-      style={{ color }}
+      className="holo-panel holo-scan absolute w-80 z-50 overflow-hidden transition-all duration-300"
+      style={{ color, left: pos.x, top: pos.y }}
     >
       {/* Outer border */}
       <div
