@@ -4,7 +4,6 @@ import * as THREE from 'three'
 import SpriteText from 'three-spritetext'
 import graphData from '../data.json'
 import NodePanel from './NodePanel'
-import { createCosmicEye } from './CosmicEye'
 import { createBlackHole } from './BlackHole'
 import { createBlackHoleTON618 } from './BlackHoleTON618'
 import { createNeutronStar } from './NeutronStar'
@@ -102,15 +101,6 @@ export default function GraphViewer() {
   useEffect(() => {
     if (!graphRef.current) return
     const scene = graphRef.current.scene()
-
-    const eye = createCosmicEye(scene, {
-      position: new THREE.Vector3(0, 30, -1000),
-      count: 15000,
-      scale: 180,
-      rotate: false,
-      brightness: 1.6,
-      particleSize: 0.5,
-    })
 
     const bh1 = createBlackHole(scene, {
       position: new THREE.Vector3(320, 40, -250),
@@ -230,7 +220,6 @@ export default function GraphViewer() {
       lastT = now
 
       // Cosmic entities
-      eye.update(now / 1000)
       bh1.update(now / 1000)
       bh2.update(now / 1000)
       ton618_a.update(now / 1000)
@@ -315,7 +304,6 @@ export default function GraphViewer() {
 
     return () => {
       cancelAnimationFrame(ambientRaf)
-      eye.dispose()
       bh1.dispose()
       bh2.dispose()
       ton618_a.dispose()
