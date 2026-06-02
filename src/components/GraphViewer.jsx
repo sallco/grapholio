@@ -104,13 +104,17 @@ export default function GraphViewer() {
     const eye = createCosmicEye(scene)
 
     const bh1 = createBlackHole(scene, {
-      position: new THREE.Vector3(520, 60, -370),
+      position: new THREE.Vector3(320, 40, -250),
+      count: 9000,
+      diskSize: 80,
       tiltX: -0.6,
       tiltZ: 0.3,
       timeOffset: 0,
     })
     const bh2 = createBlackHole(scene, {
-      position: new THREE.Vector3(-460, -50, 390),
+      position: new THREE.Vector3(-300, -40, 280),
+      count: 9000,
+      diskSize: 80,
       tiltX: 0.8,
       tiltZ: -0.5,
       timeOffset: 12.5,

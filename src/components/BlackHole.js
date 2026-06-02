@@ -35,7 +35,7 @@ export function createBlackHole(scene, {
   tiltZ = 0.3,
   timeOffset = 0,
 } = {}) {
-  const geometry = new THREE.PlaneGeometry(0.8, 0.8)
+  const geometry = new THREE.PlaneGeometry(1.5, 1.5)
   const material = new THREE.ShaderMaterial({
     uniforms: { uTime: { value: 0 } },
     vertexShader: VERT,
@@ -111,10 +111,11 @@ export function createBlackHole(scene, {
       )
 
       const heat = Math.max(0.0, Math.min(1.0, 1.0 - distToHorizon / (diskSize * 0.7)))
-      const hue = (0.05 + heat * 0.55 + jetProb * 0.4) % 1.0
-      const saturation = Math.max(0.0, 1.0 - jetProb * 0.6)
+      // Orange-yellow palette: inner hot = bright yellow-orange, outer = deep red-orange, jets = white
+      const hue = 0.04 + heat * 0.07                             // 0.04 (red-orange) → 0.11 (yellow-orange)
+      const saturation = Math.max(0.0, 0.95 - jetProb * 0.95)   // jets go white (sat→0)
       const doppler = (Math.sin(angle) * 0.5 + 0.5) * heat
-      const lightness = Math.min(1.0, (0.05 + heat * 0.6 + doppler * 0.4) * luminosity + jetProb * 0.8)
+      const lightness = Math.min(1.0, 0.12 + heat * 0.68 + doppler * 0.2 + jetProb * 0.88)
 
       pColor.setHSL(hue, saturation, lightness)
       positions[i].lerp(target, 0.15)
