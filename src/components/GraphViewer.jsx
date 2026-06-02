@@ -8,6 +8,7 @@ import { createCosmicEye } from './CosmicEye'
 import { createBlackHole } from './BlackHole'
 import { createBlackHoleTON618 } from './BlackHoleTON618'
 import { createQuantumVortex } from './QuantumVortex'
+import { createNeutronStar } from './NeutronStar'
 
 const GROUP_PALETTE = {
   1: { color: '#60a5fa' },
@@ -143,6 +144,21 @@ export default function GraphViewer() {
       tilt: 1.0, timeOffset: 14,
     })
 
+    const ns1 = createNeutronStar(scene, {
+      position: new THREE.Vector3(350, 190, -320),
+      timeOffset: 0,
+    })
+    const ns2 = createNeutronStar(scene, {
+      position: new THREE.Vector3(-430, -170, 240),
+      scale: 40,
+      timeOffset: 8,
+    })
+    const ns3 = createNeutronStar(scene, {
+      position: new THREE.Vector3(60, 290, -490),
+      scale: 38,
+      timeOffset: 16,
+    })
+
     const vortex = createQuantumVortex(scene, {
       position: new THREE.Vector3(-220, 140, -380),
       count: 1800,
@@ -150,7 +166,7 @@ export default function GraphViewer() {
       flow: 0.12,
       vortex: 0.6,
       pulse: 0.4,
-      brightness: 0.22,
+      brightness: 0.45,
       timeOffset: 4,
     })
 
@@ -226,6 +242,9 @@ export default function GraphViewer() {
       ton618_b.update(now / 1000)
       ton618_c.update(now / 1000)
       ton618_d.update(now / 1000)
+      ns1.update(now / 1000)
+      ns2.update(now / 1000)
+      ns3.update(now / 1000)
       vortex.update(now / 1000)
 
       // Halo rings
@@ -309,6 +328,9 @@ export default function GraphViewer() {
       ton618_b.dispose()
       ton618_c.dispose()
       ton618_d.dispose()
+      ns1.dispose()
+      ns2.dispose()
+      ns3.dispose()
       vortex.dispose()
       twinklers.forEach(({ pts, geo, mat }) => { scene.remove(pts); geo.dispose(); mat.dispose() })
       shooters.forEach(({ strands }) => strands.forEach(({ line, geo, mat }) => { scene.remove(line); geo.dispose(); mat.dispose() }))
