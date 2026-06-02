@@ -36,6 +36,28 @@ export default function GraphViewer() {
 
       graphRef.current.cameraPosition({ z: 270 })
 
+      // Star field — two layers for depth
+      const scene = graphRef.current.scene()
+      const addStars = (count, spread, size, opacity) => {
+        const positions = new Float32Array(count * 3)
+        for (let i = 0; i < count * 3; i++) {
+          positions[i] = (Math.random() - 0.5) * spread
+        }
+        const geo = new THREE.BufferGeometry()
+        geo.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+        const mat = new THREE.PointsMaterial({
+          color: '#ffffff',
+          size,
+          transparent: true,
+          opacity,
+          sizeAttenuation: true,
+        })
+        scene.add(new THREE.Points(geo, mat))
+      }
+
+      addStars(1800, 4000, 1.2, 0.55)  // far — many, small, dim
+      addStars(800,  1800, 2.0, 0.85)  // near — fewer, bigger, bright
+
       const controls = graphRef.current.controls()
       controls.enableDamping = true
       controls.dampingFactor = 0.08
