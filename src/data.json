@@ -1,20 +1,94 @@
 {
   "nodes": [
-    { "id": "root", "name": "Diego Andre Calderón Salazar", "group": 1, "val": 24, "desc": "Estudiante de Ingeniería en Ciencias de la Computación y Desarrollador Full-Stack. Universidad del Valle de Guatemala." },
+    {
+      "id": "root",
+      "name": "Diego Andre Calderón Salazar",
+      "group": 1,
+      "val": 24,
+      "desc": "Estudiante de Ingeniería en Ciencias de la Computación y Desarrollador Full-Stack. Universidad del Valle de Guatemala."
+    },
 
-    { "id": "branch_profile", "name": "Información Personal", "group": 2, "val": 16, "desc": "Datos académicos, competencias base y trayectoria." },
-    { "id": "branch_tech", "name": "Tecnologías y Herramientas", "group": 2, "val": 16, "desc": "Ecosistema técnico de desarrollo full-stack." },
-    { "id": "branch_projects", "name": "Proyectos Desarrollados", "group": 2, "val": 16, "desc": "Galería de aplicaciones y sistemas interactivos construidos." },
+    {
+      "id": "branch_profile",
+      "name": "Información Personal",
+      "group": 2,
+      "val": 16,
+      "desc": "Datos académicos, competencias base y trayectoria."
+    },
+    {
+      "id": "branch_tech",
+      "name": "Tecnologías y Herramientas",
+      "group": 2,
+      "val": 16,
+      "desc": "Ecosistema técnico de desarrollo full-stack."
+    },
+    {
+      "id": "branch_projects",
+      "name": "Proyectos Desarrollados",
+      "group": 2,
+      "val": 16,
+      "desc": "Galería de aplicaciones y sistemas interactivos construidos."
+    },
 
-    { "id": "info_edu", "name": "UVG — Ingeniería CC", "group": 3, "val": 12, "desc": "Tercer año de Ingeniería en Ciencias de la Computación, Universidad del Valle de Guatemala." },
-    { "id": "info_age", "name": "22 años", "group": 3, "val": 10, "desc": "Desarrollador activo desde los primeros años de carrera." },
+    {
+      "id": "info_edu",
+      "name": "UVG — Ingeniería CC",
+      "group": 3,
+      "val": 12,
+      "desc": "Tercer año de Ingeniería en Ciencias de la Computación, Universidad del Valle de Guatemala."
+    },
+    {
+      "id": "info_age",
+      "name": "22 años",
+      "group": 3,
+      "val": 10,
+      "desc": "Desarrollador activo desde los primeros años de carrera."
+    },
 
-    { "id": "tech_go", "name": "Go (Golang)", "group": 4, "val": 12, "desc": "APIs REST de alto rendimiento, servicios backend y arquitecturas eficientes." },
-    { "id": "tech_react", "name": "React", "group": 4, "val": 12, "desc": "SPA, interfaces interactivas y manejo de estado del lado del cliente." },
-    { "id": "tech_db", "name": "Bases de Datos", "group": 4, "val": 12, "desc": "PostgreSQL y MariaDB: diseño de esquemas, relaciones y optimización de consultas." },
+    {
+      "id": "tech_go",
+      "name": "Go (Golang)",
+      "group": 4,
+      "val": 12,
+      "desc": "APIs REST de alto rendimiento, servicios backend y arquitecturas eficientes."
+    },
+    {
+      "id": "tech_react",
+      "name": "React",
+      "group": 4,
+      "val": 12,
+      "desc": "SPA, interfaces interactivas y manejo de estado del lado del cliente."
+    },
+    {
+      "id": "tech_db",
+      "name": "Bases de Datos",
+      "group": 4,
+      "val": 12,
+      "desc": "PostgreSQL y MariaDB: diseño de esquemas, relaciones y optimización de consultas."
+    },
 
-    { "id": "proj_music", "name": "E-Commerce Musical", "group": 5, "val": 14, "desc": "Tienda de álbumes en línea. Stack: Vue, Fastify, iTunes API." },
-    { "id": "proj_narrative", "name": "Plataforma HTML Narrativa", "group": 5, "val": 14, "desc": "Estructura web narrativa adaptable basada en conceptos psicológicos y piezas musicales." }
+    {
+      "id": "proj_music",
+      "name": "E-Commerce Musical",
+      "group": 5,
+      "val": 14,
+      "desc": "Tienda de álbumes en línea con búsqueda en tiempo real, carrito de compras y reproducción de previews.",
+      "tech": ["Vue", "Fastify", "iTunes API", "Node.js"],
+      "github": null,
+      "demo": null,
+      "image": null
+    },
+    {
+      "id": "proj_narrative",
+      "name": "Plataforma HTML Narrativa",
+      "group": 5,
+      "val": 14,
+      "desc": "Estructura web narrativa adaptable basada en conceptos psicológicos y piezas musicales conceptuales.",
+      "tech": ["HTML", "CSS", "JavaScript"],
+      "github": null,
+      "demo": null,
+      "image": null
+    }
   ],
   "links": [
     { "source": "root", "target": "branch_profile" },
