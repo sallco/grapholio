@@ -14,6 +14,7 @@ export function createCosmicEye(scene, {
   position = new THREE.Vector3(-450, 120, -350),
   count = 8000,
   scale = 28,
+  rotate = true,
 } = {}) {
   const S = scale
 
@@ -112,9 +113,9 @@ export function createCosmicEye(scene, {
       // Slow breathing pulse
       rad *= 1 + Math.sin(t * 2) * 0.012
 
-      // Y-axis rotation
-      const cosA = Math.cos(t * 0.35)
-      const sinA = Math.sin(t * 0.35)
+      // Y-axis rotation (optional)
+      const cosA = rotate ? Math.cos(t * 0.35) : 1
+      const sinA = rotate ? Math.sin(t * 0.35) : 0
 
       target.set(
         (cx * cosA - cz * sinA) * rad,

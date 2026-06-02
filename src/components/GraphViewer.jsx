@@ -7,7 +7,6 @@ import NodePanel from './NodePanel'
 import { createCosmicEye } from './CosmicEye'
 import { createBlackHole } from './BlackHole'
 import { createBlackHoleTON618 } from './BlackHoleTON618'
-import { createQuantumVortex } from './QuantumVortex'
 import { createNeutronStar } from './NeutronStar'
 
 const GROUP_PALETTE = {
@@ -104,7 +103,12 @@ export default function GraphViewer() {
     if (!graphRef.current) return
     const scene = graphRef.current.scene()
 
-    const eye = createCosmicEye(scene)
+    const eye = createCosmicEye(scene, {
+      position: new THREE.Vector3(0, 30, -600),
+      count: 12000,
+      scale: 180,
+      rotate: false,
+    })
 
     const bh1 = createBlackHole(scene, {
       position: new THREE.Vector3(320, 40, -250),
@@ -157,17 +161,6 @@ export default function GraphViewer() {
       position: new THREE.Vector3(60, 290, -490),
       scale: 38,
       timeOffset: 16,
-    })
-
-    const vortex = createQuantumVortex(scene, {
-      position: new THREE.Vector3(-220, 140, -380),
-      count: 1800,
-      radius: 75,
-      flow: 0.12,
-      vortex: 0.6,
-      pulse: 0.4,
-      brightness: 0.45,
-      timeOffset: 4,
     })
 
     // Twinkling groups — 3 layers with offset phases
@@ -245,7 +238,6 @@ export default function GraphViewer() {
       ns1.update(now / 1000)
       ns2.update(now / 1000)
       ns3.update(now / 1000)
-      vortex.update(now / 1000)
 
       // Halo rings
       haloRings.current.forEach((ring, i) => {
@@ -331,7 +323,6 @@ export default function GraphViewer() {
       ns1.dispose()
       ns2.dispose()
       ns3.dispose()
-      vortex.dispose()
       twinklers.forEach(({ pts, geo, mat }) => { scene.remove(pts); geo.dispose(); mat.dispose() })
       shooters.forEach(({ strands }) => strands.forEach(({ line, geo, mat }) => { scene.remove(line); geo.dispose(); mat.dispose() }))
     }
