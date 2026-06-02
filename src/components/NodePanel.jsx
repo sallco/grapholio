@@ -96,20 +96,23 @@ export default function NodePanel({ node, pos, onClose }) {
 
   return (
     <div
-      className="holo-panel absolute z-50"
+      className="holo-panel holo-scan absolute z-50"
       style={{
         color,
         left: position.x,
         top: position.y,
         width: '400px',
-        animation: 'holo-deploy 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        animation: 'holo-deploy 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards, flicker 6s 0.6s infinite',
         cursor: dragging ? 'grabbing' : 'default',
       }}
     >
-      {/* Gradient border wrapper */}
+      {/* Gradient border wrapper + outer glow */}
       <div
         className="relative rounded-md p-px"
-        style={{ background: `linear-gradient(135deg, ${color}70, ${color}15, ${color}50)` }}
+        style={{
+          background: `linear-gradient(135deg, ${color}90, ${color}20, ${color}70)`,
+          boxShadow: `0 0 18px ${color}50, 0 0 40px ${color}25, inset 0 0 12px ${color}15`,
+        }}
       >
         {/* Corner brackets — live on the border, not inside content */}
         <div className="absolute -top-px -left-px w-4 h-4 border-t-2 border-l-2 rounded-tl-md pointer-events-none" style={{ borderColor: color }} />
@@ -120,7 +123,19 @@ export default function NodePanel({ node, pos, onClose }) {
         {/* Inner panel */}
         <div
           className="relative rounded-md overflow-hidden"
-          style={{ background: 'rgba(5,12,31,0.93)', backdropFilter: 'blur(14px)' }}
+          style={{
+            background: `rgba(5,12,31,0.78)`,
+            backdropFilter: 'blur(16px)',
+            backgroundImage: `
+              repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 3px,
+                rgba(255,255,255,0.018) 3px,
+                rgba(255,255,255,0.018) 4px
+              )
+            `,
+          }}
         >
           {/* Deploy scanline — sube sincronizada con clip-path reveal */}
           <div
