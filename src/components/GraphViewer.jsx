@@ -5,6 +5,7 @@ import SpriteText from 'three-spritetext'
 import graphData from '../data.json'
 import NodePanel from './NodePanel'
 import { createCosmicEye } from './CosmicEye'
+import { createBlackHole } from './BlackHole'
 
 const GROUP_PALETTE = {
   1: { color: '#60a5fa' },
@@ -102,6 +103,19 @@ export default function GraphViewer() {
 
     const eye = createCosmicEye(scene)
 
+    const bh1 = createBlackHole(scene, {
+      position: new THREE.Vector3(520, 60, -370),
+      tiltX: -0.6,
+      tiltZ: 0.3,
+      timeOffset: 0,
+    })
+    const bh2 = createBlackHole(scene, {
+      position: new THREE.Vector3(-460, -50, 390),
+      tiltX: 0.8,
+      tiltZ: -0.5,
+      timeOffset: 12.5,
+    })
+
     // Twinkling groups — 3 layers with offset phases
     const twinklers = Array.from({ length: 3 }, (_, i) => {
       const count = 180
@@ -166,8 +180,10 @@ export default function GraphViewer() {
       const now = Date.now()
       lastT = now
 
-      // Cosmic eye
+      // Cosmic entities
       eye.update(now / 1000)
+      bh1.update(now / 1000)
+      bh2.update(now / 1000)
 
       // Halo rings
       haloRings.current.forEach((ring, i) => {
@@ -244,6 +260,8 @@ export default function GraphViewer() {
     return () => {
       cancelAnimationFrame(ambientRaf)
       eye.dispose()
+      bh1.dispose()
+      bh2.dispose()
       twinklers.forEach(({ pts, geo, mat }) => { scene.remove(pts); geo.dispose(); mat.dispose() })
       shooters.forEach(({ strands }) => strands.forEach(({ line, geo, mat }) => { scene.remove(line); geo.dispose(); mat.dispose() }))
     }
