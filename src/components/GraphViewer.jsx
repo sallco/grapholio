@@ -56,7 +56,7 @@ export default function GraphViewer() {
       }
 
       addStars(1800, 4000, 1.2, 0.55)  // far — many, small, dim
-      addStars(800,  1800, 2.0, 0.85)  // near — fewer, bigger, bright
+      addStars(700,  1800, 2.0, 0.85)  // near — fewer, bigger, bright
 
       const controls = graphRef.current.controls()
       controls.enableDamping = true
@@ -93,16 +93,136 @@ export default function GraphViewer() {
   //   }
   // }, [])
 
-  // Halo animation loop
+  // Halo + ambient effects loop
   useEffect(() => {
+    if (!graphRef.current) return
+    const scene = graphRef.current.scene()
+
+    // Twinkling groups — 3 layers with offset phases
+    const twinklers = Array.from({ length: 3 }, (_, i) => {
+      const count = 180
+      const pos = new Float32Array(count * 3)
+      for (let j = 0; j < count * 3; j++) pos[j] = (Math.random() - 0.5) * 3500
+      const geo = new THREE.BufferGeometry()
+      geo.setAttribute('position', new THREE.BufferAttribute(pos, 3))
+      const mat = new THREE.PointsMaterial({
+        color: '#ddeeff',
+        size: 1.6 + i * 0.4,
+        transparent: true,
+        opacity: 0.5,
+        sizeAttenuation: true,
+      })
+      const pts = new THREE.Points(geo, mat)
+      scene.add(pts)
+      return { pts, geo, mat, phase: (i * Math.PI * 2) / 3, speed: 0.35 + i * 0.2 }
+    })
+
+    // Shooting stars
+    const shooters = []
+    let nextSpawn = Date.now() + 1500 + Math.random() * 2000
+
+    const spawnShooter = () => {
+      // Spawn on a plane near the scene center, guaranteed to cross camera view
+      const side = Math.random() < 0.5 ? -1 : 1
+      const sx = side * (350 + Math.random() * 150)
+      const sy = (Math.random() - 0.5) * 300
+      const sz = (Math.random() - 0.5) * 200
+
+      // Direction: mostly horizontal, slight arc, always crosses center area
+      const angle = (Math.random() - 0.5) * 0.4  // slight vertical drift
+      const dir = new THREE.Vector3(-side, Math.sin(angle), (Math.random() - 0.5) * 0.3).normalize()
+
+      const trailLen = 120 + Math.random() * 180
+      const speed = 600 + Math.random() * 400
+
+      const makeStrand = (offset) => {
+        const pos = new Float32Array(6)
+        const geo = new THREE.BufferGeometry()
+        geo.setAttribute('position', new THREE.BufferAttribute(pos, 3))
+        const mat = new THREE.LineBasicMaterial({
+          color: '#e8f4ff',
+          transparent: true,
+          opacity: 0,
+          depthWrite: false,
+        })
+        const line = new THREE.Line(geo, mat)
+        scene.add(line)
+        return { line, geo, mat, offset }
+      }
+
+      const strands = [makeStrand(0), makeStrand(2), makeStrand(-2)]
+      const perp = new THREE.Vector3(-dir.z, 0, dir.x).normalize()
+      shooters.push({ strands, start: new THREE.Vector3(sx, sy, sz), dir, perp, trailLen, speed, born: Date.now() })
+    }
+
+    let lastT = Date.now()
+    let ambientRaf
+
     const animate = () => {
+      const now = Date.now()
+      lastT = now
+
+      // Halo rings
       haloRings.current.forEach((ring, i) => {
         ring.rotation.z += i % 2 === 0 ? 0.005 : -0.003
       })
-      rafRef.current = requestAnimationFrame(animate)
+
+      // Twinkling
+      twinklers.forEach(({ mat, phase, speed }) => {
+        mat.opacity = 0.2 + 0.5 * (0.5 + 0.5 * Math.sin(now * 0.001 * speed + phase))
+      })
+
+      // Spawn shooting star
+      if (now >= nextSpawn && shooters.length < 3) {
+        spawnShooter()
+        nextSpawn = now + 3000 + Math.random() * 5000
+      }
+
+      // Update shooting stars
+      for (let i = shooters.length - 1; i >= 0; i--) {
+        const s = shooters[i]
+        const elapsed = (now - s.born) / 1000
+        const headD = elapsed * s.speed
+        const tailD = Math.max(0, headD - s.trailLen)
+        const maxD = s.trailLen * 3.5
+
+        let opacity
+        if (headD < s.trailLen) {
+          opacity = headD / s.trailLen
+        } else if (headD > maxD * 0.75) {
+          opacity = 1 - (headD - maxD * 0.75) / (maxD * 0.25)
+        } else {
+          opacity = 1
+        }
+
+        s.strands.forEach(({ line, geo, mat, offset }) => {
+          const off = s.perp.clone().multiplyScalar(offset)
+          const head = s.start.clone().addScaledVector(s.dir, headD).add(off)
+          const tail = s.start.clone().addScaledVector(s.dir, tailD).add(off)
+          const p = geo.attributes.position
+          p.setXYZ(0, tail.x, tail.y, tail.z)
+          p.setXYZ(1, head.x, head.y, head.z)
+          p.needsUpdate = true
+          // Center strand fully opaque, side strands dimmer
+          mat.opacity = Math.max(0, opacity * (offset === 0 ? 1 : 0.45))
+        })
+
+        if (headD > maxD) {
+          s.strands.forEach(({ line, geo, mat }) => { scene.remove(line); geo.dispose(); mat.dispose() })
+          shooters.splice(i, 1)
+        }
+      }
+
+      ambientRaf = requestAnimationFrame(animate)
     }
-    rafRef.current = requestAnimationFrame(animate)
-    return () => cancelAnimationFrame(rafRef.current)
+
+    ambientRaf = requestAnimationFrame(animate)
+
+    return () => {
+      cancelAnimationFrame(ambientRaf)
+      twinklers.forEach(({ pts, geo, mat }) => { scene.remove(pts); geo.dispose(); mat.dispose() })
+      shooters.forEach(({ strands }) => strands.forEach(({ line, geo, mat }) => { scene.remove(line); geo.dispose(); mat.dispose() }))
+    }
   }, [])
 
   const nodeThreeObject = useCallback((node) => {
