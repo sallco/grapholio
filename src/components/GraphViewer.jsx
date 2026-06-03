@@ -109,7 +109,7 @@ export default function GraphViewer() {
         return 45
       })
 
-      graphRef.current.cameraPosition({ x: 0, y: 0, z: 370 })
+      graphRef.current.cameraPosition({ x: -300, y: -60, z: 200 })
 
       // Star field — two layers for depth
       const scene = graphRef.current.scene()
@@ -139,7 +139,7 @@ export default function GraphViewer() {
       controls.rotateSpeed = 0.6
       controls.zoomSpeed = 1.6
       controls.panSpeed = 1.2
-      controls.minDistance = 0.5
+      controls.minDistance = 0
       controls.maxDistance = 3000
       controls.screenSpacePanning = true
     }
@@ -426,7 +426,7 @@ export default function GraphViewer() {
     // Floating label above sphere
     const label = new SpriteText(node.name)
     label.color = GROUP_PALETTE[node.group]?.color ?? '#ffffff'
-    label.textHeight = node.group === 1 ? 4.0 : node.group === 2 ? 3.2 : 2.5
+    label.textHeight = node.group === 1 ? 5.5 : node.group === 2 ? 4.5 : 3.5
     label.position.y = radius + 2.5
     label.fontFace = 'Space Grotesk, system-ui, sans-serif'
     label.backgroundColor = 'rgba(10,15,36,0.55)'
