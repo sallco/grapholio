@@ -124,6 +124,28 @@
       "image": "/projects/qash.png"
     },
     {
+      "id": "proj_lab_viz",
+      "name": "RetailMax — BI & SQL",
+      "group": 5,
+      "val": 12,
+      "status": "Completado",
+      "desc": "Laboratorio de modelado relacional y visualización de datos sobre dominio retail. PostgreSQL 15 como única fuente de verdad, Metabase como capa BI, todo orquestado con Docker Compose. Sin backend propio — los analistas trabajan directamente sobre el schema.",
+      "highlights": [
+        "Schema 13 tablas con integridad 100% declarativa: CHECK constraints en cada enumeración, sin triggers",
+        "11 índices B-tree explícitos anticipando patrones de JOIN de Metabase — optimización OLAP sobre OLTP",
+        "Seed reproducible automático via /docker-entrypoint-initdb.d — estado inicial idéntico en primer compose up"
+      ],
+      "learnings": [
+        "Estrategia de indexación orientada a cargas analíticas (OLAP-like sobre OLTP)",
+        "Integración Metabase sobre PostgreSQL como capa BI sin código de aplicación",
+        "Entornos reproducibles con Docker Compose, .env y plantillas de configuración"
+      ],
+      "tech": ["PostgreSQL 15", "Metabase", "Docker Compose", "SQL"],
+      "github": "https://github.com/Pxdro-410/Lab-visualizaciones-DB.git",
+      "demo": null,
+      "image": "/projects/lab-visualizaciones.png"
+    },
+    {
       "id": "proj_py2micro",
       "name": "Axis Motors — IoT & CUDA",
       "group": 5,
@@ -190,6 +212,7 @@
 
     { "source": "branch_projects", "target": "proj_software" },
 
+    { "source": "branch_projects", "target": "proj_lab_viz" },
     { "source": "branch_projects", "target": "proj_py2micro" },
     { "source": "branch_projects", "target": "proj_qash" },
     { "source": "branch_projects", "target": "proj_proyecto2_db" }
