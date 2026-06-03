@@ -124,6 +124,32 @@
       "image": "/projects/qash.png"
     },
     {
+      "id": "proj_py2micro",
+      "name": "Axis Motors — IoT & CUDA",
+      "group": 5,
+      "val": 14,
+      "status": "Completado",
+      "desc": "Sistema IoT de carro inteligente con ESP8266 y pipeline de análisis masivamente paralelo en CUDA C++. El firmware gestiona sensores heterogéneos (ultrasónico, micrófono, fotorresistencia, BMP280) y envía telemetría a Google Sheets. Los 5000 registros acumulados se post-procesan con 5 kernels GPU en Tesla T4 vía Google Colab.",
+      "highlights": [
+        "Loop no bloqueante en ESP8266: partición de tiempo con millis() para 5 subsistemas concurrentes sin delay() ni RTOS",
+        "Pipeline CUDA 3-tier: edge (ESP8266) → cloud (Google Sheets) → analytics (Tesla T4) — arquitectura IoT end-to-end completa",
+        "Estimación de temperatura ambiente desde presión barométrica con función __host__ __device__ — ejecuta igual en CPU y kernels GPU",
+        "Reducción atómica en GPU: atomicAdd sobre 5000 elementos en paralelo para estadísticas del HC-SR04 sin race conditions",
+        "Last-valid fallback en medirDistancia() para tolerancia a fallos del sensor ultrasónico"
+      ],
+      "learnings": [
+        "Firmware C++ embebido en ESP8266: I²C, GPIO, UART, WiFi, HTTPS con WiFiClientSecure y Blynk",
+        "Programación CUDA: cudaMalloc/cudaFree/cudaMemcpy, lanzamiento de kernels, cudaDeviceSynchronize",
+        "NVIDIA Thrust para reducciones paralelas con semántica STL sobre GPU",
+        "Heterogeneous computing: CPU para I/O y post-procesamiento, GPU para cómputo intensivo paralelo",
+        "Simulación de circuitos electrónicos con Proteus y diseño de arquitecturas IoT end-to-end"
+      ],
+      "tech": ["C++ (Arduino)", "CUDA C++", "ESP8266", "Python", "NVIDIA Thrust", "Blynk", "Google Sheets", "Proteus"],
+      "github": "https://github.com/Diego-glitch-cloud/PY2-MICRO",
+      "demo": null,
+      "image": "/projects/py2-micro.png"
+    },
+    {
       "id": "proj_proyecto2_db",
       "name": "Tienda de Discos",
       "group": 5,
@@ -164,6 +190,7 @@
 
     { "source": "branch_projects", "target": "proj_software" },
 
+    { "source": "branch_projects", "target": "proj_py2micro" },
     { "source": "branch_projects", "target": "proj_qash" },
     { "source": "branch_projects", "target": "proj_proyecto2_db" }
   ]
