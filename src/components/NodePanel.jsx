@@ -88,6 +88,12 @@ export default function NodePanel({ node, pos, onClose }) {
     setPosition({ x: pos.x, y: pos.y })
   }, [pos.x, pos.y])
 
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') onClose() }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [onClose])
+
   const onMouseDown = (e) => {
     if (e.button !== 0) return
     e.preventDefault()

@@ -348,7 +348,7 @@ export default function GraphViewer() {
     // Floating label above sphere
     const label = new SpriteText(node.name)
     label.color = GROUP_PALETTE[node.group]?.color ?? '#ffffff'
-    label.textHeight = node.group === 1 ? 3.5 : node.group === 2 ? 2.8 : 2.2
+    label.textHeight = node.group === 1 ? 7.5 : node.group === 2 ? 6.5 : 5.5
     label.position.y = radius + 4
     label.fontFace = 'Space Grotesk, system-ui, sans-serif'
     label.backgroundColor = 'rgba(10,15,36,0.55)'
