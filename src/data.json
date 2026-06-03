@@ -94,6 +94,34 @@
       "image": "/projects/software-proyecto.png"
     },
     {
+      "id": "proj_qash",
+      "name": "QASH — Billetera Digital",
+      "group": 5,
+      "val": 16,
+      "status": "Completado",
+      "desc": "Plataforma fintech de inclusión financiera para el mercado informal de Guatemala, construida en hackathon. Vendedores cobran con QR, compradores pagan desde su wallet, admin supervisa métricas. Pago de saldo con Stripe. Tres roles: seller, buyer, admin.",
+      "highlights": [
+        "Normalización defensiva de QR: pipeline de hasta 3 pasadas decode + regex UUID + parseo URL — desacopla al cliente del formato exacto del backend o escáner",
+        "Refresh token con rotación completa: cada uso invalida el token anterior, protegiendo contra replay attacks sin necesidad de blacklist",
+        "Confirmación Stripe por polling server-side: consulta paymentIntents.retrieve con guard de idempotencia para evitar doble acreditación",
+        "Transferencia saldo con $inc atómico por documento en MongoDB — validación de saldo antes de iniciar, limitación documentada",
+        "Hidratación SSR/CSR sin mismatch: patrón mounted state para valores sensibles al tiempo en Next.js App Router"
+      ],
+      "learnings": [
+        "Stores reactivos con Zustand: mapeo entre modelos de API y modelos de dominio, persistencia en localStorage",
+        "Validación tipo-safe con Zod + React Hook Form: schemas reutilizables con manejo de errores a nivel de campo",
+        "Integración Stripe Payments API: PaymentIntent, Customer lazy, confirmación server-side sin webhooks",
+        "Modelado MongoDB con Mongoose: hooks pre-save para bcrypt, select:false en campos sensibles, populate",
+        "RBAC con middleware chain en Express: auth → requireRole → controller, composición declarativa"
+      ],
+      "tech": ["Next.js 16", "React 19", "TypeScript", "Zustand", "Zod", "Express 5", "MongoDB", "Mongoose", "Stripe", "shadcn/ui", "Recharts"],
+      "links": [
+        { "label": "Frontend (GitHub)", "url": "https://github.com/hackathon-cursor/hackaton-frontend.git" },
+        { "label": "Backend (GitHub)", "url": "https://github.com/hackathon-cursor/hackathon-backend.git" }
+      ],
+      "image": "/projects/qash.png"
+    },
+    {
       "id": "proj_music",
       "name": "E-Commerce Musical",
       "group": 5,
@@ -155,6 +183,7 @@
 
     { "source": "branch_projects", "target": "proj_software" },
 
+    { "source": "branch_projects", "target": "proj_qash" },
     { "source": "branch_projects", "target": "proj_music" },
     { "source": "branch_projects", "target": "proj_narrative" },
     { "source": "branch_projects", "target": "proj_proyecto2_db" }
