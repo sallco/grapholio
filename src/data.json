@@ -35,15 +35,47 @@
       "id": "info_edu",
       "name": "UVG — Ingeniería CC",
       "group": 3,
-      "val": 12,
-      "desc": "Tercer año de Ingeniería en Ciencias de la Computación, Universidad del Valle de Guatemala."
+      "val": 11,
+      "desc": "Estudiante de Ingeniería en Ciencias de la Computación y Tecnologías de la Información en la Universidad del Valle de Guatemala. Actualmente en tercer año, a la mitad de la carrera."
     },
     {
       "id": "info_age",
-      "name": "22 años",
+      "name": "23 años",
       "group": 3,
-      "val": 10,
-      "desc": "Desarrollador activo desde los primeros años de carrera."
+      "val": 8,
+      "desc": "Desarrollador activo y apasionado por la tecnología desde los primeros años de carrera."
+    },
+    {
+      "id": "info_intecap",
+      "name": "INTECAP — Electrónica Industrial",
+      "group": 3,
+      "val": 9,
+      "desc": "Perito con especialización en Electrónica Industrial, cursado en INTECAP de 2020 a 2022."
+    },
+    {
+      "id": "info_merit",
+      "name": "Honor al Mérito Académico",
+      "group": 3,
+      "val": 11,
+      "desc": "Reconocimiento otorgado por la Universidad del Valle de Guatemala en primer y segundo año por mantener un promedio superior a 95 puntos. Distinción entregada a los estudiantes con el desempeño académico más alto de su año."
+    },
+    {
+      "id": "info_open",
+      "name": "Open to Work",
+      "group": 3,
+      "val": 12,
+      "desc": "Disponible para oportunidades profesionales — internships, proyectos freelance y posiciones junior en desarrollo web full-stack o ciencia de datos. Comprometido con aprender rápido y aportar desde el primer día."
+    },
+    {
+      "id": "info_contact",
+      "name": "Contacto",
+      "group": 3,
+      "val": 12,
+      "desc": "¿Tienes un proyecto o una oportunidad en mente? Escríbeme directamente o revisa mi trabajo en GitHub.",
+      "links": [
+        { "label": "Enviar email", "url": "mailto:dcalderon918@gmail.com" },
+        { "label": "GitHub", "url": "https://github.com/Diego-glitch-cloud" }
+      ]
     },
 
     { "id": "cat_languages",  "name": "Lenguajes",      "group": 7, "val": 13, "desc": "Lenguajes de programación con los que disfruto trabajar." },
@@ -255,6 +287,10 @@
 
     { "source": "branch_profile", "target": "info_edu" },
     { "source": "branch_profile", "target": "info_age" },
+    { "source": "branch_profile", "target": "info_intecap" },
+    { "source": "branch_profile", "target": "info_merit" },
+    { "source": "branch_profile", "target": "info_open" },
+    { "source": "branch_profile", "target": "info_contact" },
 
     { "source": "branch_tech", "target": "cat_languages" },
     { "source": "branch_tech", "target": "cat_frameworks" },
