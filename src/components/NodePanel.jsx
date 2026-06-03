@@ -245,8 +245,8 @@ export default function NodePanel({ node, pos, onClose }) {
           >
             {/* Image */}
             {isProject && node.image && (
-              <div className="mb-7 rounded-lg overflow-hidden" style={{ border: `1px solid ${color}30` }}>
-                <img src={node.image} alt={node.name} className="w-full h-48 object-cover" />
+              <div className="mb-7 rounded-lg overflow-hidden" style={{ border: `1px solid ${color}30`, background: 'rgba(0,0,0,0.3)' }}>
+                <img src={node.image} alt={node.name} className="w-full object-contain" style={{ maxHeight: '280px' }} />
               </div>
             )}
             {isProject && !node.image && (

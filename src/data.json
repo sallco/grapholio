@@ -71,7 +71,7 @@
       "id": "proj_software",
       "name": "Gestión Parroquial",
       "group": 5,
-      "val": 20,
+      "val": 32,
       "featured": true,
       "status": "En Desarrollo",
       "desc": "Plataforma administrativa para la Parroquia San Pedro Nolasco (UVG 2026). Gestiona tareas litúrgicas, reservas de espacios con validación de conflictos, eventos, grupos parroquiales y notificaciones segmentadas. Metodología Scrum con deploy real en Azure VM.",
@@ -98,7 +98,7 @@
       "id": "proj_qash",
       "name": "QASH — Billetera Digital",
       "group": 5,
-      "val": 20,
+      "val": 32,
       "featured": true,
       "status": "Completado",
       "desc": "Plataforma fintech de inclusión financiera para el mercado informal de Guatemala, construida en hackathon. Vendedores cobran con QR, compradores pagan desde su wallet, admin supervisa métricas. Pago de saldo con Stripe. Tres roles: seller, buyer, admin.",
@@ -124,10 +124,33 @@
       "image": "/projects/qash.png"
     },
     {
+      "id": "proj_calculator",
+      "name": "Calculator — React TS",
+      "group": 5,
+      "val": 5,
+      "status": "Completado",
+      "desc": "Calculadora con estética de terminal construida en React 19 + TypeScript. Lógica centralizada en Custom Hook useCalculator como autómata de estados finitos. Componentes puramente presentacionales con restricciones de diseño estrictas: < 20 líneas por componente, 9 caracteres en display, Standard Style sin semicolons.",
+      "highlights": [
+        "Custom Hook como autómata: shouldResetDisplay + operator/previousValue definen transiciones limpias entre entrada, operador pendiente, ejecución y resultado",
+        "formatResult() con toPrecision(9) + parseFloat().toString() — ajuste exacto a 9 caracteres eliminando ceros finales sin truncar significancia",
+        "Encadenamiento de operadores izquierda-a-derecha deliberado y verificado por test: applyOperator() evalúa expresión acumulada antes de registrar el nuevo operador"
+      ],
+      "learnings": [
+        "Patrón Headless Logic: Custom Hook con toda la lógica, componentes < 20 líneas completamente stateless",
+        "Testing unitario de hooks con renderHook + act — cobertura de overflow, ERROR state, encadenamiento y casos borde",
+        "Documentación de componentes con Storybook 10: Stories para Button, Display y Calculator",
+        "Atomic Design con restricciones de tamaño forzadas por la cátedra"
+      ],
+      "tech": ["React 19", "TypeScript", "Vitest", "Storybook", "Bun", "Vite", "Vercel"],
+      "github": "https://github.com/Diego-glitch-cloud/lab7-calculator",
+      "demo": "https://calculator-7i9t7n7tf-salco-s-projects.vercel.app",
+      "image": "/projects/calculator.png"
+    },
+    {
       "id": "proj_snake",
       "name": "Snake — React Game",
       "group": 5,
-      "val": 10,
+      "val": 6,
       "status": "Completado",
       "desc": "Juego Snake clásico como SPA en React 19 + Vite. Laboratorio 6 del curso de Desarrollo Web (UVG). Game loop con setInterval, input buffering con cola FIFO, máquina de estados explícita y highscore persistido en localStorage.",
       "highlights": [
@@ -198,7 +221,7 @@
       "id": "proj_proyecto2_db",
       "name": "Tienda de Discos",
       "group": 5,
-      "val": 20,
+      "val": 32,
       "featured": true,
       "desc": "Tienda de vinilos, CDs y cassettes con panel admin multirol. Venta online y venta presencial desde el panel de staff, con KPIs en tiempo real y exportación CSV.",
       "highlights": [
@@ -235,6 +258,7 @@
 
     { "source": "branch_projects", "target": "proj_software" },
 
+    { "source": "branch_projects", "target": "proj_calculator" },
     { "source": "branch_projects", "target": "proj_snake" },
     { "source": "branch_projects", "target": "proj_lab_viz" },
     { "source": "branch_projects", "target": "proj_py2micro" },
