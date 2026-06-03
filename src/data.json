@@ -124,6 +124,29 @@
       "image": "/projects/qash.png"
     },
     {
+      "id": "proj_snake",
+      "name": "Snake — React Game",
+      "group": 5,
+      "val": 10,
+      "status": "Completado",
+      "desc": "Juego Snake clásico como SPA en React 19 + Vite. Laboratorio 6 del curso de Desarrollo Web (UVG). Game loop con setInterval, input buffering con cola FIFO, máquina de estados explícita y highscore persistido en localStorage.",
+      "highlights": [
+        "Patrón ref-mirror: useRef paralelo a cada useState para que moveSnake() lea valores actuales dentro del closure obsoleto del setInterval",
+        "Input buffering con dirQueue FIFO (máx. 2): desacopla tasa de input del tick — keypress dispara movimiento inmediato + reinicio de intervalo para latencia cero",
+        "generateFood con do-while hasta celda libre — funciona correctamente cuando la serpiente ocupa casi todo el tablero"
+      ],
+      "learnings": [
+        "Game loop en navegador: setInterval con limpieza correcta en return de useEffect",
+        "Stale closures en React: solución con refs paralelos sincronizados por useEffect",
+        "Máquina de estados explícita con enum GAME_STATE y transiciones declarativas",
+        "Separación lógica pura (gameUtils.js) del árbol de componentes — funciones sin efectos secundarios"
+      ],
+      "tech": ["React 19", "JavaScript", "Vite", "CSS", "localStorage", "Vercel"],
+      "github": "https://github.com/Diego-glitch-cloud/lab6-snake",
+      "demo": "https://snake-game-en4wnqbdt-salco-s-projects.vercel.app/",
+      "image": "/projects/snake.png"
+    },
+    {
       "id": "proj_lab_viz",
       "name": "RetailMax — BI & SQL",
       "group": 5,
@@ -212,6 +235,7 @@
 
     { "source": "branch_projects", "target": "proj_software" },
 
+    { "source": "branch_projects", "target": "proj_snake" },
     { "source": "branch_projects", "target": "proj_lab_viz" },
     { "source": "branch_projects", "target": "proj_py2micro" },
     { "source": "branch_projects", "target": "proj_qash" },
