@@ -276,7 +276,7 @@
       ],
       "tech": ["Vue 3", "Fastify", "MariaDB", "Prisma", "Docker", "JWT", "Chart.js", "GitHub Actions"],
       "github": "https://github.com/Diego-glitch-cloud/Proyecto2-DB",
-      "demo": null,
+      "demo": "http://35.255.29.219:8081/",
       "image": "/projects/proyecto2-db.png"
     }
   ],

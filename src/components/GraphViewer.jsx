@@ -5,6 +5,7 @@ import SpriteText from 'three-spritetext'
 import graphData from '../data.json'
 import NodePanel from './NodePanel'
 import WelcomeCard from './WelcomeCard'
+import SidebarMenu from './SidebarMenu'
 import { createBlackHole } from './BlackHole'
 import { createBlackHoleTON618 } from './BlackHoleTON618'
 import { createNeutronStar } from './NeutronStar'
@@ -35,6 +36,7 @@ export default function GraphViewer() {
   const [selectedNode, setSelectedNode] = useState(null)
   const [closingPanel, setClosingPanel] = useState(false)
   const [showWelcome, setShowWelcome] = useState(true)
+  const [sidebarOpen, setSidebarOpen] = useState(true)
 
   const closePanel = useCallback(() => {
     if (closingPanel) return
@@ -152,25 +154,6 @@ export default function GraphViewer() {
     return () => window.removeEventListener('resize', onResize)
   }, [])
 
-  // Truco raycast para drag solo con clic izq — desactivado por preferencia de navegación
-  // useEffect(() => {
-  //   const noop = () => {}
-  //   const disableRaycast = (e) => {
-  //     if (e.button !== 2) return
-  //     nodeMeshes.current.forEach((mesh) => { mesh.raycast = noop })
-  //   }
-  //   const restoreRaycast = (e) => {
-  //     if (e.button !== 2) return
-  //     nodeMeshes.current.forEach((mesh) => { mesh.raycast = THREE.Mesh.prototype.raycast })
-  //   }
-  //   window.addEventListener('mousedown', disableRaycast)
-  //   window.addEventListener('mouseup', restoreRaycast)
-  //   return () => {
-  //     window.removeEventListener('mousedown', disableRaycast)
-  //     window.removeEventListener('mouseup', restoreRaycast)
-  //   }
-  // }, [])
-
   // Halo + ambient effects loop
   useEffect(() => {
     if (!graphRef.current) return
@@ -264,14 +247,12 @@ export default function GraphViewer() {
     let nextSpawn = Date.now() + 1500 + Math.random() * 2000
 
     const spawnShooter = () => {
-      // Spawn on a plane near the scene center, guaranteed to cross camera view
       const side = Math.random() < 0.5 ? -1 : 1
       const sx = side * (350 + Math.random() * 150)
       const sy = (Math.random() - 0.5) * 300
       const sz = (Math.random() - 0.5) * 200
 
-      // Direction: mostly horizontal, slight arc, always crosses center area
-      const angle = (Math.random() - 0.5) * 0.4  // slight vertical drift
+      const angle = (Math.random() - 0.5) * 0.4
       const dir = new THREE.Vector3(-side, Math.sin(angle), (Math.random() - 0.5) * 0.3).normalize()
 
       const trailLen = 120 + Math.random() * 180
@@ -306,7 +287,6 @@ export default function GraphViewer() {
       lastT = now
       frameCount++
 
-      // Cosmic entities — throttled to 30fps (every 2nd frame) to keep CPU load manageable
       if (frameCount % 2 === 0) {
         const t = now / 1000
         bh1.update(t)
@@ -322,12 +302,10 @@ export default function GraphViewer() {
         ns3.update(t)
       }
 
-      // Halo rings
       haloRings.current.forEach((ring, i) => {
         ring.rotation.z += i % 2 === 0 ? 0.005 : -0.003
       })
 
-      // Selected node — color oscillation + self-rotation
       const selId = selectedNodeIdRef.current
       nodeMeshes.current.forEach((mesh, id) => {
         if (id === selId) {
@@ -343,18 +321,15 @@ export default function GraphViewer() {
         }
       })
 
-      // Twinkling
       twinklers.forEach(({ mat, phase, speed }) => {
         mat.opacity = 0.2 + 0.5 * (0.5 + 0.5 * Math.sin(now * 0.001 * speed + phase))
       })
 
-      // Spawn shooting star
       if (now >= nextSpawn && shooters.length < 3) {
         spawnShooter()
         nextSpawn = now + 3000 + Math.random() * 5000
       }
 
-      // Update shooting stars
       for (let i = shooters.length - 1; i >= 0; i--) {
         const s = shooters[i]
         const elapsed = (now - s.born) / 1000
@@ -379,7 +354,6 @@ export default function GraphViewer() {
           p.setXYZ(0, tail.x, tail.y, tail.z)
           p.setXYZ(1, head.x, head.y, head.z)
           p.needsUpdate = true
-          // Center strand fully opaque, side strands dimmer
           mat.opacity = Math.max(0, opacity * (offset === 0 ? 1 : 0.45))
         })
 
@@ -423,7 +397,6 @@ export default function GraphViewer() {
     const mesh = new THREE.Mesh(geometry, material)
     nodeMeshes.current.set(node.id, mesh)
 
-    // Floating label above sphere
     const label = new SpriteText(node.name)
     label.color = GROUP_PALETTE[node.group]?.color ?? '#ffffff'
     label.textHeight = node.group === 1 ? 5.5 : node.group === 2 ? 4.5 : 3.5
@@ -466,7 +439,6 @@ export default function GraphViewer() {
     }
 
     if (node.id === 'root') {
-      // Outer ring
       const ring1 = new THREE.Mesh(
         new THREE.RingGeometry(radius * 1.7, radius * 2.0, 48),
         new THREE.MeshBasicMaterial({
@@ -478,7 +450,6 @@ export default function GraphViewer() {
       )
       ring1.rotation.x = Math.PI * 0.35
 
-      // Inner ring — different tilt, counter-rotates
       const ring2 = new THREE.Mesh(
         new THREE.RingGeometry(radius * 1.3, radius * 1.55, 48),
         new THREE.MeshBasicMaterial({
@@ -544,6 +515,29 @@ export default function GraphViewer() {
     []
   )
 
+  const handleNodeSelect = useCallback((nodeInput) => {
+    const internalNode = graphRef.current?.graphData().nodes.find(n => n.id === nodeInput.id) || nodeInput;
+    selectedNodeIdRef.current = internalNode.id
+    setSelectedNode(internalNode)
+
+    if (graphRef.current) {
+      const camera = graphRef.current.camera()
+      const vec = new THREE.Vector3(internalNode.x ?? 0, internalNode.y ?? 0, internalNode.z ?? 0)
+      vec.project(camera)
+      const sw = dimensions.width
+      const sh = dimensions.height
+      const panelW = 416  // card width + margin
+      const panelH = 480  // approximate max height
+      const margin = 24
+      let x = (vec.x + 1) / 2 * sw + margin
+      let y = -(vec.y - 1) / 2 * sh - panelH / 2
+      // Clamp to viewport
+      x = Math.min(Math.max(x, margin), sw - panelW - margin)
+      y = Math.min(Math.max(y, margin), sh - panelH - margin)
+      setPanelPos({ x, y })
+    }
+  }, [dimensions])
+
   return (
     <div
       className="w-full h-screen relative overflow-hidden"
@@ -552,7 +546,17 @@ export default function GraphViewer() {
         if (!e.target.closest('[data-nodepanel]')) closePanel()
       }}
     >
-      {showWelcome && <WelcomeCard onDismiss={() => setShowWelcome(false)} />}
+      <div className="absolute top-8 left-8 bottom-8 w-[380px] flex flex-col gap-6 z-40 pointer-events-none">
+        {showWelcome && <WelcomeCard onDismiss={() => setShowWelcome(false)} />}
+        <SidebarMenu
+          isOpen={sidebarOpen}
+          onToggle={() => setSidebarOpen(!sidebarOpen)}
+          onClose={() => setSidebarOpen(false)}
+          nodes={graphData.nodes}
+          onSelectNode={handleNodeSelect}
+        />
+      </div>
+      
       <ForceGraph3D
         ref={graphRef}
         graphData={graphData}
@@ -575,24 +579,7 @@ export default function GraphViewer() {
         enableNodeDrag={false}
         showNavInfo={false}
         onNodeHover={updateHighlight}
-        onNodeClick={(node) => {
-          selectedNodeIdRef.current = node.id
-          setSelectedNode(node)
-          const camera = graphRef.current.camera()
-          const vec = new THREE.Vector3(node.x ?? 0, node.y ?? 0, node.z ?? 0)
-          vec.project(camera)
-          const sw = dimensions.width
-          const sh = dimensions.height
-          const panelW = 416  // card width + margin
-          const panelH = 480  // approximate max height
-          const margin = 24
-          let x = (vec.x + 1) / 2 * sw + margin
-          let y = -(vec.y - 1) / 2 * sh - panelH / 2
-          // Clamp to viewport
-          x = Math.min(Math.max(x, margin), sw - panelW - margin)
-          y = Math.min(Math.max(y, margin), sh - panelH - margin)
-          setPanelPos({ x, y })
-        }}
+        onNodeClick={handleNodeSelect}
       />
       <NodePanel key={selectedNode?.id} node={selectedNode} pos={panelPos} isClosing={closingPanel} onClose={closePanel} />
     </div>

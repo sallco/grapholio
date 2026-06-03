@@ -26,11 +26,8 @@ export default function WelcomeCard({ onDismiss }) {
   return (
     <div
       ref={cardRef}
-      className="absolute z-40 pointer-events-auto"
+      className="relative z-40 pointer-events-auto w-full shrink-0"
       style={{
-        top: 32,
-        left: 32,
-        width: 380,
         opacity,
         transform: `translateY(${translateY}px)`,
         transition: 'opacity 0.6s ease, transform 0.6s ease',
