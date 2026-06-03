@@ -516,7 +516,13 @@ export default function GraphViewer() {
   )
 
   const handleNodeSelect = useCallback((nodeInput) => {
-    const internalNode = graphRef.current?.graphData().nodes.find(n => n.id === nodeInput.id) || nodeInput;
+    if (closePanelTimer.current) {
+      clearTimeout(closePanelTimer.current)
+      closePanelTimer.current = null
+      setClosingPanel(false)
+    }
+
+    const internalNode = graphData.nodes.find(n => n.id === nodeInput.id) || nodeInput;
     selectedNodeIdRef.current = internalNode.id
     setSelectedNode(internalNode)
 
@@ -543,7 +549,7 @@ export default function GraphViewer() {
       className="w-full h-screen relative overflow-hidden"
       onMouseDown={(e) => {
         if (!selectedNode || closingPanel) return
-        if (!e.target.closest('[data-nodepanel]')) closePanel()
+        if (!e.target.closest('[data-nodepanel]') && !e.target.closest('[data-sidebarmenu]')) closePanel()
       }}
     >
       <div className="absolute top-8 left-8 bottom-8 w-[380px] flex flex-col gap-6 z-40 pointer-events-none">

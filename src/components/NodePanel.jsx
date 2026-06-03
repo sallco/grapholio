@@ -88,6 +88,8 @@ export default function NodePanel({ node, pos, onClose, isClosing = false }) {
   useEffect(() => {
     if (isClosing) {
       requestAnimationFrame(() => setVisualClosing(true))
+    } else {
+      setVisualClosing(false)
     }
   }, [isClosing])
 

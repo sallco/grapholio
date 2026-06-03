@@ -25,7 +25,7 @@ export default function SidebarMenu({ isOpen, onToggle, onClose, nodes, onSelect
   const techNodes = nodes.filter(n => n.group === 4)
 
   return (
-    <div ref={menuRef} className="flex flex-col gap-4 pointer-events-auto w-full flex-1 min-h-0 transition-all duration-300">
+    <div ref={menuRef} data-sidebarmenu className="flex flex-col gap-4 pointer-events-auto w-full flex-1 min-h-0 transition-all duration-300">
       <button
         onClick={onToggle}
         className="shrink-0 flex items-center justify-center gap-3 px-5 py-3.5 rounded-md text-sm font-medium tracking-widest uppercase transition-all duration-200"
