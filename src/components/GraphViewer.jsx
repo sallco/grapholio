@@ -26,6 +26,8 @@ export default function GraphViewer() {
   const nodeMeshes = useRef(new Map())
   const haloRings = useRef([])
   const rafRef = useRef(null)
+  const nodeIconTextures = useRef(new Map())  // nodeId → THREE.Texture
+  const pendingIconSprites = useRef(new Map()) // nodeId → THREE.Sprite
   const highlightLinksRef = useRef(new Set())
   const highlightNodesRef = useRef(new Set())
   const selectedNodeIdRef = useRef(null)
@@ -55,6 +57,42 @@ export default function GraphViewer() {
     width: window.innerWidth,
     height: window.innerHeight,
   })
+
+  // Preload tech icons
+  useEffect(() => {
+    graphData.nodes.filter(n => n.icon).forEach(node => {
+      const img = new Image()
+      img.crossOrigin = 'anonymous'
+      img.onload = () => {
+        const size = 128
+        const canvas = document.createElement('canvas')
+        canvas.width = size; canvas.height = size
+        const ctx = canvas.getContext('2d')
+        ctx.fillStyle = 'rgba(10,15,36,0.85)'
+        ctx.beginPath()
+        ctx.arc(size / 2, size / 2, size / 2 - 1, 0, Math.PI * 2)
+        ctx.fill()
+        const pad = 18
+        ctx.drawImage(img, pad, pad, size - pad * 2, size - pad * 2)
+        const texture = new THREE.CanvasTexture(canvas)
+        nodeIconTextures.current.set(node.id, texture)
+        const sprite = pendingIconSprites.current.get(node.id)
+        if (sprite) {
+          sprite.material.map = texture
+          sprite.material.opacity = 1
+          sprite.material.needsUpdate = true
+          pendingIconSprites.current.delete(node.id)
+        }
+      }
+      img.onerror = () => {}
+      img.src = node.icon
+    })
+    return () => {
+      nodeIconTextures.current.forEach(t => t.dispose())
+      nodeIconTextures.current.clear()
+      pendingIconSprites.current.clear()
+    }
+  }, [])
 
   useEffect(() => {
     if (graphRef.current) {
@@ -390,6 +428,22 @@ export default function GraphViewer() {
     label.padding = 1.5
     label.borderRadius = 3
     mesh.add(label)
+
+    if (node.icon) {
+      const texture = nodeIconTextures.current.get(node.id) ?? null
+      const iconMat = new THREE.SpriteMaterial({
+        map: texture,
+        transparent: true,
+        opacity: texture ? 1 : 0,
+        depthWrite: false,
+      })
+      const iconSprite = new THREE.Sprite(iconMat)
+      const s = radius * 2.4
+      iconSprite.scale.set(s, s, 1)
+      iconSprite.position.y = 0
+      mesh.add(iconSprite)
+      if (!texture) pendingIconSprites.current.set(node.id, iconSprite)
+    }
 
     if (node.featured) {
       const ring = new THREE.Mesh(
