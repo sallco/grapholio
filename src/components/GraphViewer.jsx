@@ -26,6 +26,7 @@ export default function GraphViewer() {
   const nodeMeshes = useRef(new Map())
   const haloRings = useRef([])
   const rafRef = useRef(null)
+  const closePanelTimer = useRef(null)
   const nodeIconTextures = useRef(new Map())  // nodeId → THREE.Texture
   const pendingIconSprites = useRef(new Map()) // nodeId → THREE.Sprite
   const highlightLinksRef = useRef(new Set())
@@ -38,7 +39,7 @@ export default function GraphViewer() {
   const closePanel = useCallback(() => {
     if (closingPanel) return
     setClosingPanel(true)
-    setTimeout(() => {
+    closePanelTimer.current = setTimeout(() => {
       selectedNodeIdRef.current = null
       setSelectedNode(prev => {
         const mesh = nodeMeshes.current.get(prev?.id)
@@ -50,6 +51,7 @@ export default function GraphViewer() {
         return null
       })
       setClosingPanel(false)
+      closePanelTimer.current = null
     }, 420)
   }, [closingPanel])
   const [panelPos, setPanelPos] = useState({ x: 0, y: 0 })
