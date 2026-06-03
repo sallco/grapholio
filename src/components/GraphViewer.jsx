@@ -37,7 +37,12 @@ export default function GraphViewer() {
   useEffect(() => {
     if (graphRef.current) {
       graphRef.current.d3Force('charge').strength(-120)
-      graphRef.current.d3Force('link').distance(60)
+      graphRef.current.d3Force('link').distance((link) => {
+        const src = typeof link.source === 'object' ? link.source.id : link.source
+        const tgt = typeof link.target === 'object' ? link.target.id : link.target
+        if (src === 'branch_tech' || src?.startsWith('cat_')) return 10
+        return 45
+      })
 
       graphRef.current.cameraPosition({ z: 270 })
 
@@ -336,7 +341,7 @@ export default function GraphViewer() {
 
   const nodeThreeObject = useCallback((node) => {
     const palette = GROUP_PALETTE[node.group] ?? GROUP_PALETTE[1]
-    const radius = Math.cbrt(node.val) * 2
+    const radius = Math.cbrt(node.val) * 1.3
     const geometry = new THREE.SphereGeometry(radius, 8, 8)
     const material = new THREE.MeshBasicMaterial({
       color: palette.color,
@@ -348,8 +353,8 @@ export default function GraphViewer() {
     // Floating label above sphere
     const label = new SpriteText(node.name)
     label.color = GROUP_PALETTE[node.group]?.color ?? '#ffffff'
-    label.textHeight = node.group === 1 ? 7.5 : node.group === 2 ? 6.5 : 5.5
-    label.position.y = radius + 4
+    label.textHeight = node.group === 1 ? 4.0 : node.group === 2 ? 3.2 : 2.5
+    label.position.y = radius + 2.5
     label.fontFace = 'Space Grotesk, system-ui, sans-serif'
     label.backgroundColor = 'rgba(10,15,36,0.55)'
     label.padding = 1.5

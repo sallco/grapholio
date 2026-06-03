@@ -4,7 +4,7 @@
       "id": "root",
       "name": "Diego Andre Calderón Salazar",
       "group": 1,
-      "val": 24,
+      "val": 1000,
       "desc": "Estudiante de Ingeniería en Ciencias de la Computación y Desarrollador Full-Stack. Universidad del Valle de Guatemala."
     },
 
@@ -45,27 +45,30 @@
       "desc": "Desarrollador activo desde los primeros años de carrera."
     },
 
-    {
-      "id": "tech_go",
-      "name": "Go (Golang)",
-      "group": 4,
-      "val": 12,
-      "desc": "APIs REST de alto rendimiento, servicios backend y arquitecturas eficientes."
-    },
-    {
-      "id": "tech_react",
-      "name": "React",
-      "group": 4,
-      "val": 12,
-      "desc": "SPA, interfaces interactivas y manejo de estado del lado del cliente."
-    },
-    {
-      "id": "tech_db",
-      "name": "Bases de Datos",
-      "group": 4,
-      "val": 12,
-      "desc": "PostgreSQL y MariaDB: diseño de esquemas, relaciones y optimización de consultas."
-    },
+    { "id": "cat_languages",  "name": "Lenguajes",      "group": 4, "val": 13, "desc": "Lenguajes de programación con los que disfruto trabajar." },
+    { "id": "cat_frameworks", "name": "Frameworks",     "group": 4, "val": 13, "desc": "Frameworks y librerías con las que estoy familiarizado." },
+    { "id": "cat_databases",  "name": "Bases de Datos", "group": 4, "val": 13, "desc": "Motores de base de datos relacionales que" },
+    { "id": "cat_infra",      "name": "Infraestructura","group": 4, "val": 13, "desc": "Herramientas de despliegue, contenedores y CI/CD." },
+
+    { "id": "tech_go",         "name": "Go",          "group": 4, "val": 7, "desc": "APIs REST de alto rendimiento y servicios backend eficientes." },
+    { "id": "tech_ts",         "name": "TypeScript",  "group": 4, "val": 7, "desc": "Tipado estático sobre JavaScript para frontend y backend." },
+    { "id": "tech_js",         "name": "JavaScript",  "group": 4, "val": 7, "desc": "ES2022+, lógica de cliente y scripting." },
+    { "id": "tech_python",     "name": "Python",      "group": 4, "val": 7, "desc": "Análisis de datos, scripting y notebooks Jupyter." },
+    { "id": "tech_sql",        "name": "SQL",         "group": 4, "val": 7, "desc": "DDL/DML, Stored Procedures, vistas y optimización de consultas." },
+    { "id": "tech_cpp",        "name": "C++ / CUDA",  "group": 4, "val": 7, "desc": "Firmware embebido ESP8266 y kernels CUDA para computación paralela en GPU." },
+
+    { "id": "tech_react",      "name": "React",       "group": 4, "val": 7, "desc": "SPA e interfaces reactivas con hooks y manejo de estado." },
+    { "id": "tech_nextjs",     "name": "Next.js",     "group": 4, "val": 7, "desc": "App Router, SSR/CSR híbrido y despliegue en Vercel." },
+    { "id": "tech_express",    "name": "Express / Fastify", "group": 4, "val": 7, "desc": "APIs REST en Node.js con middleware chains y RBAC." },
+    { "id": "tech_vue",        "name": "Vue 3",       "group": 4, "val": 7, "desc": "Composition API, Pinia y vue-router para SPAs." },
+    { "id": "tech_tailwind",   "name": "Tailwind CSS","group": 4, "val": 7, "desc": "Utility-first CSS, v4 con plugin Vite, design tokens." },
+
+    { "id": "tech_mariadb",    "name": "MariaDB",     "group": 4, "val": 7, "desc": "InnoDB, RBAC a nivel DBMS, Stored Procedures y GRANTs granulares." },
+    { "id": "tech_postgres",   "name": "PostgreSQL",  "group": 4, "val": 7, "desc": "Índices B-tree, integridad declarativa y cargas analíticas con Metabase." },
+
+    { "id": "tech_docker",     "name": "Docker",      "group": 4, "val": 7, "desc": "Contenedores multi-stage, Compose con healthchecks y volúmenes persistentes." },
+    { "id": "tech_gh_actions", "name": "GitHub Actions","group": 4,"val": 7, "desc": "CI/CD pipelines: deploy automático a Azure VM y Vercel en push a main." },
+    { "id": "tech_vercel",     "name": "Vercel",      "group": 4, "val": 7, "desc": "Deploy de Next.js y SPAs con preview automático por rama." },
 
     {
       "id": "proj_software",
@@ -252,9 +255,30 @@
     { "source": "branch_profile", "target": "info_edu" },
     { "source": "branch_profile", "target": "info_age" },
 
-    { "source": "branch_tech", "target": "tech_go" },
-    { "source": "branch_tech", "target": "tech_react" },
-    { "source": "branch_tech", "target": "tech_db" },
+    { "source": "branch_tech", "target": "cat_languages" },
+    { "source": "branch_tech", "target": "cat_frameworks" },
+    { "source": "branch_tech", "target": "cat_databases" },
+    { "source": "branch_tech", "target": "cat_infra" },
+
+    { "source": "cat_languages",  "target": "tech_go" },
+    { "source": "cat_languages",  "target": "tech_ts" },
+    { "source": "cat_languages",  "target": "tech_js" },
+    { "source": "cat_languages",  "target": "tech_python" },
+    { "source": "cat_languages",  "target": "tech_sql" },
+    { "source": "cat_languages",  "target": "tech_cpp" },
+
+    { "source": "cat_frameworks", "target": "tech_react" },
+    { "source": "cat_frameworks", "target": "tech_nextjs" },
+    { "source": "cat_frameworks", "target": "tech_express" },
+    { "source": "cat_frameworks", "target": "tech_vue" },
+    { "source": "cat_frameworks", "target": "tech_tailwind" },
+
+    { "source": "cat_databases",  "target": "tech_mariadb" },
+    { "source": "cat_databases",  "target": "tech_postgres" },
+
+    { "source": "cat_infra",      "target": "tech_docker" },
+    { "source": "cat_infra",      "target": "tech_gh_actions" },
+    { "source": "cat_infra",      "target": "tech_vercel" },
 
     { "source": "branch_projects", "target": "proj_software" },
 
