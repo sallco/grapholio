@@ -44,7 +44,7 @@ export default function GraphViewer() {
         return 45
       })
 
-      graphRef.current.cameraPosition({ z: 270 })
+      graphRef.current.cameraPosition({ x: 60, y: 80, z: 400 }, { x: 0, y: 0, z: 0 })
 
       // Star field — two layers for depth
       const scene = graphRef.current.scene()
@@ -73,7 +73,10 @@ export default function GraphViewer() {
       controls.dampingFactor = 0.08
       controls.rotateSpeed = 0.6
       controls.zoomSpeed = 1.6
-      controls.panSpeed = 0.8
+      controls.panSpeed = 1.2
+      controls.minDistance = 5
+      controls.maxDistance = 3000
+      controls.screenSpacePanning = true
     }
   }, [])
 
