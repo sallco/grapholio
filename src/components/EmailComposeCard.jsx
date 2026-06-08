@@ -184,7 +184,7 @@ export default function EmailComposeCard({ open, onClose, color = '#60a5fa' }) {
               <Field
                 label="Mensaje" color={color} multiline rows={4} required
                 value={message} onChange={(e) => setMessage(e.target.value)}
-                placeholder="Contame sobre tu proyecto u oportunidad…"
+                placeholder="Cuéntame sobre tu proyecto u oportunidad…"
               />
 
               <button

@@ -262,8 +262,8 @@ export default function NodePanel({ node, pos, onClose, isClosing = false }) {
             className="relative z-10 px-10 pb-9 overflow-y-auto flex-1 min-h-0"
             style={{ scrollbarWidth: 'thin', scrollbarColor: `${color}40 transparent` }}
           >
-            {/* Tech logo — group 4 nodes */}
-            {node.group === 4 && node.icon && (
+            {/* Logo — cualquier nodo con icon definido */}
+            {node.icon && (
               <div className="flex justify-center mb-6">
                 <img
                   src={node.icon}

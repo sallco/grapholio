@@ -67,6 +67,17 @@
       "desc": "Disponible para oportunidades profesionales — internships, proyectos freelance y posiciones junior en desarrollo web full-stack o ciencia de datos. Comprometido con aprender rápido y aportar desde el primer día."
     },
     {
+      "id": "info_spotify",
+      "name": "Spotify",
+      "group": 3,
+      "val": 10,
+      "icon": "https://cdn.simpleicons.org/spotify",
+      "desc": "Mi perfil de Spotify",
+      "links": [
+        { "label": "Ver perfil", "url": "https://open.spotify.com/user/" }
+      ]
+    },
+    {
       "id": "info_contact",
       "name": "Contacto",
       "group": 3,
@@ -292,6 +303,7 @@
     { "source": "branch_profile", "target": "info_merit" },
     { "source": "branch_profile", "target": "info_open" },
     { "source": "branch_profile", "target": "info_contact" },
+    { "source": "branch_profile", "target": "info_spotify" },
 
     { "source": "branch_tech", "target": "cat_languages" },
     { "source": "branch_tech", "target": "cat_frameworks" },
