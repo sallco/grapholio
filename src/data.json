@@ -70,7 +70,8 @@
       "id": "info_contact",
       "name": "Contacto",
       "group": 3,
-      "val": 12,
+      "val": 32,
+      "featured": true,
       "desc": "¿Tienes un proyecto o una oportunidad en mente? Escríbeme directamente o revisa mi trabajo en GitHub.",
       "links": [
         { "label": "Enviar email", "url": "mailto:dcalderon918@gmail.com" },
