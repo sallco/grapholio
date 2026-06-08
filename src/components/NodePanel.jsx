@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import EmailComposeCard from './EmailComposeCard'
 import LinkPreviewCard from './LinkPreviewCard'
+import RandomAlbumCard from './RandomAlbumCard'
 
 function spotifyEmbedUrl(url) {
   if (!url) return null
@@ -359,6 +360,13 @@ export default function NodePanel({ node, pos, onClose, isClosing = false }) {
                     <TechChip key={t} label={t} color={color} />
                   ))}
                 </div>
+              </div>
+            )}
+
+            {node.id === 'info_spotify' && (
+              <div className="mb-5">
+                <div className="mb-4 h-px" style={{ background: 'rgba(148,163,184,0.08)' }} />
+                <RandomAlbumCard color={color} profileUrl={node.links?.find((l) => l.profile)?.profile} />
               </div>
             )}
 
