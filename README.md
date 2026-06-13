@@ -1,6 +1,6 @@
 # Grapholio - Portfolio Interactivo 3D
 
-Link del proyecto: [https://diego-glitch-cloud.github.io/grapholio/](https://diego-glitch-cloud.github.io/grapholio/)
+Link del proyecto: [https://sallco.github.io/grapholio/](https://sallco.github.io/grapholio/)
 
 ![Vista previa del proyecto](public/grapholio_muestra.png)
 
@@ -32,7 +32,7 @@ Para ejecutar el proyecto en un entorno de desarrollo local, siga los pasos a co
 
 1. Clone el repositorio:
    ```bash
-   git clone https://github.com/Diego-glitch-cloud/grapholio.git
+   git clone https://github.com/sallco/grapholio.git
    ```
 
 2. Acceda al directorio del proyecto:

@@ -84,7 +84,7 @@
       "desc": "¿Tienes un proyecto o una oportunidad en mente? Escríbeme directamente o revisa mi trabajo en GitHub.",
       "links": [
         { "label": "Enviar email", "url": "mailto:dcalderon918@gmail.com" },
-        { "label": "GitHub", "url": "https://github.com/Diego-glitch-cloud" }
+        { "label": "GitHub", "url": "https://github.com/sallco" }
       ]
     },
 
@@ -188,7 +188,7 @@
         "Atomic Design con restricciones de tamaño forzadas por la cátedra"
       ],
       "tech": ["React 19", "TypeScript", "Vitest", "Storybook", "Bun", "Vite", "Vercel"],
-      "github": "https://github.com/Diego-glitch-cloud/lab7-calculator",
+      "github": "https://github.com/sallco/lab7-calculator",
       "demo": "https://calculator-7i9t7n7tf-salco-s-projects.vercel.app",
       "image": "projects/calculator.png"
     },
@@ -211,7 +211,7 @@
         "Separación lógica pura (gameUtils.js) del árbol de componentes — funciones sin efectos secundarios"
       ],
       "tech": ["React 19", "JavaScript", "Vite", "CSS", "localStorage", "Vercel"],
-      "github": "https://github.com/Diego-glitch-cloud/lab6-snake",
+      "github": "https://github.com/sallco/lab6-snake",
       "demo": "https://snake-game-en4wnqbdt-salco-s-projects.vercel.app/",
       "image": "projects/snake.png"
     },
@@ -259,7 +259,7 @@
         "Simulación de circuitos electrónicos con Proteus y diseño de arquitecturas IoT end-to-end"
       ],
       "tech": ["C++ (Arduino)", "CUDA C++", "ESP8266", "Python", "NVIDIA Thrust", "Blynk", "Google Sheets", "Proteus"],
-      "github": "https://github.com/Diego-glitch-cloud/PY2-MICRO",
+      "github": "https://github.com/sallco/PY2-MICRO",
       "demo": null,
       "image": "projects/py2-micro.png"
     },
@@ -285,7 +285,7 @@
         "Containerización multi-stage con Docker y docker-compose (frontend Nginx, backend Node, MariaDB, Adminer)"
       ],
       "tech": ["Vue 3", "Fastify", "MariaDB", "Prisma", "Docker", "JWT", "Chart.js", "GitHub Actions"],
-      "github": "https://github.com/Diego-glitch-cloud/Proyecto2-DB",
+      "github": "https://github.com/sallco/Proyecto2-DB",
       "demo": "http://35.255.29.219:8081/",
       "image": "projects/proyecto2-db.png"
     }
