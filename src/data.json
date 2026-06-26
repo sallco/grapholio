@@ -264,6 +264,33 @@
       "image": "projects/py2-micro.png"
     },
     {
+      "id": "proj_envio_masivo",
+      "name": "Envío Masivo de Documentos",
+      "group": 5,
+      "val": 28,
+      "featured": true,
+      "status": "Completado",
+      "desc": "Aplicación de escritorio para UVG que automatiza el envío masivo de diplomas y certificados personalizados. Lee participantes desde Excel, genera un PDF individualizado por persona a partir de una plantilla PowerPoint y lo envía adjunto por correo a través de Microsoft Outlook. Distribuida como ejecutable de Windows (.exe) sin necesidad de instalar Python.",
+      "highlights": [
+        "Automatización COM win32com: controla Outlook y PowerPoint como objetos COM — sin APIs externas, sin credenciales adicionales, funciona con la sesión activa del usuario",
+        "Reconstrucción de marcadores XML fragmentados: pptx_processor reconstruye el texto completo de cada párrafo antes de reemplazar <<tags>>, ya que PowerPoint fragmenta el texto en múltiples XML runs al editar",
+        "PyInstaller onefile con Pillow: collect_all('PIL') + glob explícito de .pyd resuelve el import dinámico de _imaging.pyd que el análisis estático no detecta",
+        "Asistente de 8 pasos con QStackedWidget: cada paso emite step_completed con su dict parcial, el MainWindow acumula el estado global y llama load() en el paso siguiente",
+        "JobRunner como QThread: itera filas con señales Qt para progreso en tiempo real, cancelación limpia y rate limiting de 2 s entre envíos para no saturar Outlook"
+      ],
+      "learnings": [
+        "COM Automation con win32com: dispatch de objetos Outlook/PowerPoint, manejo de excepciones COM y workarounds para ventanas minimizadas en PowerPoint moderno",
+        "PyInstaller con extensiones C: diferencia entre collect_all (Python) y binaries explícitos para .pyd — y por qué exclude silencia hiddenimports antes de que se procesen",
+        "PyQt6 threading: QThread + pyqtSignal para actualizar UI desde workers sin bloquear el event loop",
+        "AppleScript como alternativa a COM en macOS: osascript para controlar Outlook y PowerPoint con el mismo contrato de interfaz que el adapter de Windows",
+        "GitHub Actions cross-platform: compilar .exe en windows-latest runner y publicar artefacto o GitHub Release desde el mismo workflow"
+      ],
+      "tech": ["Python", "PyQt6", "python-pptx", "openpyxl", "Pillow", "pywin32", "COM Automation", "AppleScript", "PyInstaller", "GitHub Actions"],
+      "github": "https://github.com/sallco/diplomas-microsoft",
+      "demo": null,
+      "image": "projects/envio-masivo.png"
+    },
+    {
       "id": "proj_proyecto2_db",
       "name": "Tienda de Discos",
       "group": 5,
@@ -329,6 +356,7 @@
     { "source": "cat_infra",      "target": "tech_vercel" },
 
     { "source": "branch_projects", "target": "proj_software" },
+    { "source": "branch_projects", "target": "proj_envio_masivo" },
 
     { "source": "branch_projects", "target": "proj_calculator" },
     { "source": "branch_projects", "target": "proj_snake" },
