@@ -270,22 +270,20 @@
       "val": 28,
       "featured": true,
       "status": "Completado",
-      "desc": "Aplicación de escritorio para UVG que automatiza el envío masivo de diplomas y certificados personalizados. Lee participantes desde Excel, genera un PDF individualizado por persona a partir de una plantilla PowerPoint y lo envía adjunto por correo a través de Microsoft Outlook. Distribuida como ejecutable de Windows (.exe) sin necesidad de instalar Python.",
+      "desc": "UVG necesitaba enviar diplomas personalizados a cientos de participantes sin hacerlo uno por uno. Construí una app de escritorio que toma una plantilla PowerPoint y una lista Excel, genera un PDF individual para cada persona y lo envía por Outlook automáticamente. Se entrega como .exe: el usuario final solo hace doble clic.",
       "highlights": [
-        "Automatización COM win32com: controla Outlook y PowerPoint como objetos COM — sin APIs externas, sin credenciales adicionales, funciona con la sesión activa del usuario",
-        "Reconstrucción de marcadores XML fragmentados: pptx_processor reconstruye el texto completo de cada párrafo antes de reemplazar <<tags>>, ya que PowerPoint fragmenta el texto en múltiples XML runs al editar",
-        "PyInstaller onefile con Pillow: collect_all('PIL') + glob explícito de .pyd resuelve el import dinámico de _imaging.pyd que el análisis estático no detecta",
-        "Asistente de 8 pasos con QStackedWidget: cada paso emite step_completed con su dict parcial, el MainWindow acumula el estado global y llama load() en el paso siguiente",
-        "JobRunner como QThread: itera filas con señales Qt para progreso en tiempo real, cancelación limpia y rate limiting de 2 s entre envíos para no saturar Outlook"
+        "El cliente tenía políticas IT que bloqueaban OAuth y SMTP — la solución fue controlar Outlook directamente desde Python, igual que si un humano estuviera haciendo clic",
+        "PowerPoint fragmenta el texto internamente al editar, lo que rompía los marcadores de reemplazo — reconstruimos cada párrafo completo antes de aplicar los cambios",
+        "Empaquetar la app como .exe requirió resolver manualmente qué archivos internos de Pillow PyInstaller no detectaba por sí solo",
+        "El envío corre en segundo plano con barra de progreso en tiempo real y se puede cancelar sin perder los correos ya enviados"
       ],
       "learnings": [
-        "COM Automation con win32com: dispatch de objetos Outlook/PowerPoint, manejo de excepciones COM y workarounds para ventanas minimizadas en PowerPoint moderno",
-        "PyInstaller con extensiones C: diferencia entre collect_all (Python) y binaries explícitos para .pyd — y por qué exclude silencia hiddenimports antes de que se procesen",
-        "PyQt6 threading: QThread + pyqtSignal para actualizar UI desde workers sin bloquear el event loop",
-        "AppleScript como alternativa a COM en macOS: osascript para controlar Outlook y PowerPoint con el mismo contrato de interfaz que el adapter de Windows",
-        "GitHub Actions cross-platform: compilar .exe en windows-latest runner y publicar artefacto o GitHub Release desde el mismo workflow"
+        "Automatizar aplicaciones de escritorio de Windows (Outlook, PowerPoint) controlándolas como objetos desde código Python",
+        "Diseñar interfaces para usuarios no técnicos: flujo guiado paso a paso, lenguaje claro, sin jerga",
+        "Empaquetar una app Python como ejecutable portable (.exe) y distribuirla sin requerir Python instalado",
+        "Integrar CI/CD con GitHub Actions para compilar y publicar el ejecutable automáticamente en cada versión"
       ],
-      "tech": ["Python", "PyQt6", "python-pptx", "openpyxl", "Pillow", "pywin32", "COM Automation", "AppleScript", "PyInstaller", "GitHub Actions"],
+      "tech": ["Python", "PyQt6", "python-pptx", "openpyxl", "Pillow", "pywin32", "PyInstaller", "GitHub Actions"],
       "github": "https://github.com/sallco/diplomas-microsoft",
       "demo": null,
       "image": "projects/envio-masivo.png"
